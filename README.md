@@ -1,13 +1,69 @@
 # JunctionBox
 
-A local-first AI agent orchestration platform: everything (the database,
-your credentials, agent runs) stays on this machine unless you choose to
-expose it.
+**Everything connects here.**
 
-This repo hosts **downloads and documentation only** — no source code.
-Pre-built, self-contained binaries are attached to each
-[Release](../../releases/latest); no Python, Node, or any other runtime
-needs to be installed first.
+JunctionBox is a local-first control plane for autonomous AI. Connect and operate AI agents, models, tools, plugins, and machines from one place — with durable execution, multi-agent delegation, MCP tooling, remote systems, scheduling, permissions, memory, observability, and an extensible plugin architecture.
+
+Your JunctionBox database, configuration, credentials, run history, and core application state remain on your machine. JunctionBox only connects to external models, services, machines, or integrations when you configure them to do so.
+
+## What can JunctionBox do?
+
+- **Run the AI you already use** — work with Claude, Codex, Grok, Ollama, Anthropic, OpenAI, and xAI from one interface.
+- **Build agent teams** — organize specialized agents into teams and allow them to delegate work to one another within controlled boundaries.
+- **Run work durably** — agent jobs continue independently of the browser and survive disconnects and application restarts.
+- **Operate across machines** — run agents locally or execute them directly on configured remote Linux and macOS systems.
+- **Connect tools through MCP** — install and manage MCP servers and make their tools available to supported agents.
+- **Extend JunctionBox with plugins** — install downloadable plugins or build your own using the included Plugin Builder.
+- **Automate recurring work** — schedule agents, trigger them through webhooks, and connect agents to messaging channels such as Telegram.
+- **Give agents long-term context** — optionally use structured identities, user profiles, approved memories, and resumable run checkpoints.
+- **Keep autonomy under control** — sandbox agent execution, define permissions, limit team visibility, review privileged system operations, and retain audit history.
+- **Observe what is happening** — inspect live activity, run history, delegated tasks, orchestration graphs, token usage, failures, retries, and execution details.
+- **Control real systems through plugins** — extend agents into infrastructure, communications, browsers, smart-home devices, creative tools, GPU systems, and other software.
+- **Work locally first** — keep your core data and control plane on hardware you own instead of depending on a hosted agent platform.
+
+## More Than Chat
+
+JunctionBox is designed for AI that does more than answer questions.
+
+An agent can be given tools, assigned to a machine, placed on a team, scheduled to run later, delegated work by another agent, allowed to interact with external systems, and monitored throughout the entire process.
+
+JunctionBox brings those capabilities together under one local control plane.
+
+**Your agents. Your models. Your machines. Your tools. One place.**
+
+## Plugins
+
+JunctionBox includes an extensible plugin architecture for adding entirely new capabilities without changing the core application.
+
+Available plugins can extend JunctionBox into areas such as:
+
+- smart-home control and security cameras
+- iMessage and Slack
+- AI image, storyboard, comic, book, and video production
+- 3D-printable model generation
+- Kubernetes infrastructure
+- private and remote browsing
+- custom agent tools and integrations
+
+JunctionBox also includes **Plugin Builder**, which can scaffold a correctly structured JunctionBox plugin package that you can extend with your own backend, frontend, and agent-facing tools.
+
+See [`docs/PLUGINS.md`](docs/PLUGINS.md) for what's available to install today, and [`docs/JUNCTIONBOX_PLUGIN_CONTEXT.md`](docs/JUNCTIONBOX_PLUGIN_CONTEXT.md) for the plugin format if you want to build your own.
+
+## Local-First by Design
+
+JunctionBox stores its database, settings, encrypted credentials, agent definitions, run history, memories, tasks, schedules, and other core state locally.
+
+Using a cloud model or external integration naturally sends the information required for that particular operation to the service you configured. JunctionBox does not require you to move your entire agent environment into somebody else's hosted platform.
+
+You decide which providers, machines, services, and integrations JunctionBox can use.
+
+## Distribution
+
+This repository contains **downloads and documentation only**. JunctionBox is closed-source commercial software distributed as pre-built, self-contained binaries through this repository's [Releases](../../releases/latest) page.
+
+You do not need to install Python, Node.js, or another application runtime in order to install and start JunctionBox itself.
+
+Some optional capabilities may require software or accounts associated with the provider you choose — for example Claude, Codex, Grok, Ollama, external APIs, MCP servers, or third-party integrations.
 
 ## Download
 
@@ -20,7 +76,7 @@ tar -xzf junctionbox-*-*.tar.gz
 cd junctionbox-release
 ```
 
-## What's in a release
+### What's in a release
 
 | File | What it is |
 |---|---|
@@ -47,6 +103,24 @@ alongside the binaries in every release archive:
 - [`docs/THIRD_PARTY_NOTICES.md`](docs/THIRD_PARTY_NOTICES.md) — open-source components bundled with JunctionBox and their licenses
 
 Installing or using JunctionBox means you agree to the terms in `docs/EULA.md` and `docs/PRIVACY_POLICY.md`.
+
+## Editions
+
+**JunctionBox Free** — use up to two active agents with no subscription required.
+
+**JunctionBox Pro** — unlimited active agents for **$49/year**.
+
+Both editions run the same JunctionBox application. Pro removes the agent limits rather than moving your environment to a hosted service.
+
+To upgrade:
+
+1. In Settings → License, click **Upgrade to Pro** (opens a Stripe-hosted checkout page — no payment info is ever seen by JunctionBox itself).
+2. After payment, you'll land on a page showing a one-time **activation code**. Copy it.
+3. Back in JunctionBox, paste the code into Settings → License → **Activate Pro**.
+
+Your subscription auto-renews yearly by default. **Manage Subscription** (Settings → License, Pro only) opens a Stripe-hosted billing portal where you can update your payment method or cancel — canceling keeps Pro access through the period you already paid for, then reverts to Free automatically; it doesn't cut you off immediately. **Deactivate This Device** frees your license's device slot immediately (each license is bound to one device at a time) if you're moving to a new machine — deactivate on the old one before activating on the new one.
+
+See [`docs/PRIVACY_POLICY.md`](docs/PRIVACY_POLICY.md) for exactly what licensing/billing information this involves.
 
 ## Prerequisites
 
@@ -91,20 +165,6 @@ asked to set a password on first visit — this is required before any agent,
 credential, or setting can be created. Setup can only be completed from the
 JunctionBox host itself (not over a network), and every route stays locked
 until it's done.
-
-## Licensing: Free vs. Pro
-
-JunctionBox runs on the **Free** tier by default — no account, no payment, no network call required. Free allows up to **2 active agents** at a time; you can save as many agent configurations as you like, but only 2 can be enabled (running) at once. A 3rd agent you create is saved but starts disabled, and trying to enable it shows an upgrade prompt rather than failing silently.
-
-**JunctionBox Pro** ($49/year) removes that limit entirely. To upgrade:
-
-1. In Settings → License, click **Upgrade to Pro** (opens a Stripe-hosted checkout page — no payment info is ever seen by JunctionBox itself).
-2. After payment, you'll land on a page showing a one-time **activation code**. Copy it.
-3. Back in JunctionBox, paste the code into Settings → License → **Activate Pro**.
-
-Your subscription auto-renews yearly by default. **Manage Subscription** (Settings → License, Pro only) opens a Stripe-hosted billing portal where you can update your payment method or cancel — canceling keeps Pro access through the period you already paid for, then reverts to Free automatically; it doesn't cut you off immediately. **Deactivate This Device** frees your license's device slot immediately (each license is bound to one device at a time) if you're moving to a new machine — deactivate on the old one before activating on the new one.
-
-See [`docs/PRIVACY_POLICY.md`](docs/PRIVACY_POLICY.md) for exactly what licensing/billing information this involves.
 
 ## Managing the service
 
@@ -185,3 +245,11 @@ everything in one step.
 - **Service stopped after I logged out and back in**: LaunchAgents restart
   automatically at login (`RunAtLoad`), so this should self-heal — if it
   didn't, run `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.junctionbox.junctionbox-api.plist` manually.
+
+---
+
+**JunctionBox**
+
+*Everything connects here.*
+
+Built by **JunctionBox AI**.
