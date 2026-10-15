@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+macOS launchd equivalent of junctionboxd.service. This is a TEMPLATE --
+install-services.sh substitutes __HOME__ with the real home directory and
+writes the result to ~/Library/LaunchAgents/ (launchd plists can't use a
+systemd-style %h specifier; paths must be resolved before the plist is
+loaded). See app/service_manager.py for the runtime restart/status
+abstraction that targets this same Label from Python.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.junctionbox.junctionboxd</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__HOME__/.junctionbox/bin/junctionboxd</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__HOME__/.junctionbox</string>
+    <!-- junctionboxd also calls db.init_db() at startup (same as
+         junctionbox-api) with no guaranteed launch order between the two --
+         without this flag here too, junctionboxd could win that race and
+         seed this developer's own personal GPU-box IP (migration 139,
+         db.py) into a customer's database. See
+         com.junctionbox.junctionbox-api.plist's own comment. -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>JUNCTIONBOX_CUSTOMER_BUILD</key>
+        <string>1</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <!-- Restart on crash, same as systemd's Restart=on-failure -- but not
+         on a clean exit, so a deliberate stop (launchctl bootout, used by
+         service_manager.stop_service) stays stopped. -->
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <!-- No journald equivalent on macOS -- a real log file instead, see
+         README-release.md's macOS section for the "tail -f" equivalent of
+         `journalctl --user -u junctionboxd -f`. -->
+    <key>StandardOutPath</key>
+    <string>__HOME__/.junctionbox/logs/junctionboxd.log</string>
+    <key>StandardErrorPath</key>
+    <string>__HOME__/.junctionbox/logs/junctionboxd.log</string>
+</dict>
+</plist>

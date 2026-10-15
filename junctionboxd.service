@@ -1,0 +1,21 @@
+[Unit]
+Description=JunctionBox Agent Daemon
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.junctionbox
+# junctionboxd also calls db.init_db() at startup (same as junctionbox-api) with
+# no guaranteed start-order between the two units -- without this flag
+# here too, junctionboxd could win that race and seed this developer's own
+# personal GPU-box IP (migration 139, db.py) into a customer's database.
+# See junctionbox-api.service's own comment on this flag.
+Environment="JUNCTIONBOX_CUSTOMER_BUILD=1"
+ExecStart=%h/.junctionbox/bin/junctionboxd
+Restart=on-failure
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

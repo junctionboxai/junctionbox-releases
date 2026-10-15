@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+macOS launchd equivalent of junctionbox-api.service. TEMPLATE -- see
+com.junctionbox.junctionboxd.plist's header comment for the substitution
+convention (__HOME__).
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.junctionbox.junctionbox-api</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__HOME__/.junctionbox/bin/junctionbox-api</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__HOME__/.junctionbox</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>JUNCTIONBOX_API_HOST</key>
+        <string>127.0.0.1</string>
+        <key>JUNCTIONBOX_API_PORT</key>
+        <string>8000</string>
+        <key>JUNCTIONBOX_FRONTEND_DIST</key>
+        <string>__HOME__/.junctionbox/frontend-dist</string>
+        <!-- See junctionbox-api.service's own comment on this flag -- this
+             plist only ever ships as part of a build-release.sh output,
+             so unconditionally marking it a customer build here is
+             correct, not a guess. -->
+        <key>JUNCTIONBOX_CUSTOMER_BUILD</key>
+        <string>1</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>StandardOutPath</key>
+    <string>__HOME__/.junctionbox/logs/junctionbox-api.log</string>
+    <key>StandardErrorPath</key>
+    <string>__HOME__/.junctionbox/logs/junctionbox-api.log</string>
+</dict>
+</plist>

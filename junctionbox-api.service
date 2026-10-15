@@ -1,0 +1,26 @@
+[Unit]
+Description=JunctionBox API
+After=network.target
+Wants=junctionboxd.service
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.junctionbox
+Environment="JUNCTIONBOX_API_HOST=127.0.0.1"
+Environment="JUNCTIONBOX_API_PORT=8000"
+Environment="JUNCTIONBOX_FRONTEND_DIST=%h/.junctionbox/frontend-dist"
+# This unit only ever ships as part of a deploy/build-release.sh output
+# (this developer's own personal deployment runs uvicorn directly, outside
+# version control) -- so unconditionally marking it a customer build here
+# is correct, not a guess. See junctionbox_context.py's _CUSTOMER_BUILD: makes
+# the "operating context" agent toggle a no-op, since it's written for
+# developing JunctionBox's own source, which a customer install never has.
+Environment="JUNCTIONBOX_CUSTOMER_BUILD=1"
+ExecStart=%h/.junctionbox/bin/junctionbox-api
+Restart=on-failure
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
