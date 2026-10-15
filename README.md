@@ -108,7 +108,7 @@ Installing or using JunctionBox means you agree to the terms in `docs/EULA.md` a
 
 **JunctionBox Free** — use up to two active agents with no subscription required.
 
-**JunctionBox Pro** — unlimited active agents for **$49/year**.
+**JunctionBox Pro** — unlimited active agents for **$79/year**.
 
 Both editions run the same JunctionBox application. Pro removes the agent limits rather than moving your environment to a hosted service.
 

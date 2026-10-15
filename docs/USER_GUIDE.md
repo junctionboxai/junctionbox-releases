@@ -129,7 +129,7 @@ Connect one or more Telegram bots (via @BotFather tokens) to talk to a specific 
 ## Licensing: Free vs. Pro
 
 - **Free**: up to 2 active agents, no account or payment needed, works fully offline.
-- **Pro** ($49/yr): unlimited active agents.
+- **Pro** ($79/yr): unlimited active agents.
 
 Settings → License shows your current tier and usage, and has Upgrade/Manage Subscription/Deactivate Device actions. Full details — activation steps, cancellation behavior, what data this involves — are in `deploy/README-release.md`'s Licensing section and `deploy/PRIVACY_POLICY.md`.
 

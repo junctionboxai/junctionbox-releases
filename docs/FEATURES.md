@@ -100,7 +100,7 @@ This is where JunctionBox goes well beyond a single chat window:
 ## Licensing
 
 - **Free**: up to 2 active agents, no account or payment required — you can still save as many agent configurations as you like.
-- **JunctionBox Pro** ($49/year): unlimited active agents. Upgrade and manage your subscription entirely through a Stripe-hosted checkout and billing portal — JunctionBox itself never sees your payment details.
+- **JunctionBox Pro** ($79/year): unlimited active agents. Upgrade and manage your subscription entirely through a Stripe-hosted checkout and billing portal — JunctionBox itself never sees your payment details.
 - Licensing is verified against a cryptographically signed token, not a value that can simply be edited locally, and it fails closed: anything that doesn't check out resolves to Free, never Pro.
 - Works offline too: once activated, Pro stays active for up to 14 days without needing to reach the license server, refreshing automatically in the background the rest of the time.
 
