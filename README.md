@@ -97,6 +97,7 @@ The full documentation set is also kept here in [`docs/`](docs/), and ships
 alongside the binaries in every release archive:
 
 - [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) — day-to-day use: agents, chat, delegation, scheduling, memory, administration
+- [`docs/VISUAL_GUIDE.md`](docs/VISUAL_GUIDE.md) — a screenshot tour of every major feature
 - [`docs/FEATURES.md`](docs/FEATURES.md) — what JunctionBox can do, at a glance
 - [`docs/PLUGINS.md`](docs/PLUGINS.md) — optional plugins you can install
 - [`docs/JUNCTIONBOX_PLUGIN_CONTEXT.md`](docs/JUNCTIONBOX_PLUGIN_CONTEXT.md) — the plugin format, for writing your own

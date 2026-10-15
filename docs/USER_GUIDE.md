@@ -1,6 +1,6 @@
 # JunctionBox — User & Admin Guide
 
-This is a task-oriented guide to actually using JunctionBox, day to day. For installation, see `deploy/README-release.md`. For an exhaustive, source-verified technical catalog of every feature and its implementation, see `FUNCTIONALITY.md` — this guide links out to it where more depth is useful, rather than repeating it.
+This is a task-oriented guide to actually using JunctionBox, day to day. For a screenshot tour of what's described below, see [`VISUAL_GUIDE.md`](VISUAL_GUIDE.md). For installation, see `deploy/README-release.md`. For an exhaustive, source-verified technical catalog of every feature and its implementation, see `FUNCTIONALITY.md` — this guide links out to it where more depth is useful, rather than repeating it.
 
 JunctionBox is single-user software (one password, no roles) — there's no separate "admin" account. This guide covers both everyday use and the administrative tasks (backups, security, licensing) the same person is responsible for.
 
