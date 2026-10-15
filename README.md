@@ -8,7 +8,10 @@ Your JunctionBox database, configuration, credentials, run history, and core app
 
 ## What can JunctionBox do?
 
-- **Run the AI you already use** — work with Claude, Codex, Grok, Ollama, Anthropic, OpenAI, and xAI from one interface.
+- **Use Claude, Codex, and Grok without API keys** — create agents backed directly by your locally installed and authenticated Claude, Codex, or Grok CLI. JunctionBox can use the subscription-backed CLI sessions you already have, so you do not need a separate API key or API billing account for those agents.
+- **Connect API-based models too** — create agents using Anthropic, OpenAI, or xAI API credentials when you want direct API access.
+- **Run local models with Ollama** — connect agents to local or remote Ollama instances and keep inference on hardware you control.
+- **Mix providers in the same system** — a JunctionBox team can contain agents using different providers. For example, one agent can run through Claude CLI, another through Codex CLI, another through Grok CLI, another through Ollama, and another through a cloud API.
 - **Build agent teams** — organize specialized agents into teams and allow them to delegate work to one another within controlled boundaries.
 - **Run work durably** — agent jobs continue independently of the browser and survive disconnects and application restarts.
 - **Operate across machines** — run agents locally or execute them directly on configured remote Linux and macOS systems.
