@@ -26,8 +26,8 @@ JunctionBox is single-user software (one password, no roles) — there's no sepa
 
 ## Getting started
 
-1. Install JunctionBox per `deploy/README-release.md`, then open `http://127.0.0.1:8000`.
-2. On first visit you'll set an access password (8+ characters) and accept the EULA. This step only works from the machine JunctionBox is running on — nothing else about JunctionBox works until it's done.
+1. Install JunctionBox per `deploy/README-release.md`, then open `http://127.0.0.1:8000` **on that machine**.
+2. On first visit you'll set an access password (8+ characters) and accept the EULA. This step only works from the machine JunctionBox is running on, even through the HTTPS proxy below — nothing else about JunctionBox works until it's done.
 3. Log in with that password going forward. There's no "forgot password" flow — if you lose it, you'd need direct access to the machine to reset it (see Administration below).
 4. You'll land on the **Dashboard**: a summary of agents, providers, MCP tools, and recent activity, with a 3-step getting-started checklist until your first run exists.
 5. A **JunctionBox Support** agent is already there, auto-created — ask it how to use JunctionBox, or whether core services are running, at any time. It's protected (can't be deleted or have its prompt edited) and never appears as a delegation target for your other agents.
@@ -167,7 +167,7 @@ Settings lets you configure how long completed runs/tasks/logs are kept (indepen
 
 - Settings shows every active login session (address, device, last activity) and lets you revoke any of them; changing your password revokes all of them at once.
 - Every meaningful action (not just logins) is recorded in a secret-free audit log, visible in Settings.
-- JunctionBox only listens on `127.0.0.1` by default — nothing outside this machine can reach it. To expose it to another device deliberately, see `DEPLOYMENT_SECURITY.md` **before** changing the listen address; doing this without HTTPS in front of it sends your password over plain HTTP.
+- `junctionbox-api` itself only ever listens on `127.0.0.1` — nothing outside this machine can reach it directly, and this never changes. Install sets up a separate, self-signed-HTTPS Caddy proxy in front of it automatically (`install-https-proxy.sh`, runs as part of install, safe to re-run), reachable at `https://<this machine's LAN IP>:8443` (or the next free port, if something else already had 8443) — that's the one thing actually reachable from another device. First visit from a new device shows a one-time certificate warning (self-signed, no public CA) — expected, accept it once. See `DEPLOYMENT_SECURITY.md` for the reasoning.
 
 ### System diagnostics
 

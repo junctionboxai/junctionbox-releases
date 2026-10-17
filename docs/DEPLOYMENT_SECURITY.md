@@ -10,7 +10,11 @@ Complete `/api/auth/setup` from the JunctionBox host itself. Requests arriving f
 
 ## HTTPS reverse proxy
 
-Expose the browser through one HTTPS origin and proxy both `/api` and `/ws` to port 8000. Preserve the original client and scheme:
+`install-services.sh` sets this up automatically (`deploy/install-https-proxy.sh`) — a self-signed-cert Caddy instance in front of `junctionbox-api`, reachable at `https://<LAN IP>:8443` (or the next free port). `junctionbox-api` itself is never exposed directly; this proxy is the only thing actually reachable from another device. Not fatal if it fails (no network at install time, or a genuinely unsupported OS/arch) — JunctionBox still works fine at `http://127.0.0.1:8000` locally either way. Re-run it manually any time, e.g. after the LAN IP changes.
+
+Initial setup (`/api/auth/setup`, before a password exists) is rejected through this proxy on purpose — see "Initial setup" above — complete it from `127.0.0.1` on the host itself, or via `ssh -L 8000:localhost:8000 user@host` and browse to `localhost:8000` from your own machine. Everyday access afterward works fine through the HTTPS URL.
+
+To run your own reverse proxy instead (nginx, a different Caddy setup, something in front of a non-default port), expose the browser through one HTTPS origin and proxy both `/api` and `/ws` to port 8000. Preserve the original client and scheme:
 
 ```nginx
 location /api/ {
