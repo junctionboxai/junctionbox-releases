@@ -19,6 +19,7 @@ JunctionBox is single-user software (one password, no roles) — there's no sepa
 - [Webhooks](#webhooks)
 - [MCP tools and plugins](#mcp-tools-and-plugins)
 - [Machines ("Boxes") and terminals](#machines-boxes-and-terminals)
+- [Screen sharing](#screen-sharing)
 - [Licensing: Free vs. Pro](#licensing-free-vs-pro)
 - [Administration](#administration)
 - [Troubleshooting](#troubleshooting)
@@ -125,6 +126,21 @@ Connect one or more Telegram bots (via @BotFather tokens) to talk to a specific 
 
 - By default, the agent is just told about the box (connection details in its prompt) and decides for itself whether to SSH there.
 - **Remote execution** (`run_remote_on_box`, set per agent) actually moves the agent's own execution onto that box — its filesystem/shell tools genuinely operate there, not a local sandbox.
+
+## Screen sharing
+
+From a Box's card, click **Screen Share** for full mouse-and-keyboard remote control of that machine, in its own tab right alongside Chat and Terminal — not just a view, real input. This works for any registered Box, including the machine JunctionBox itself runs on ("Local").
+
+Nothing is installed permanently:
+
+- **Linux**: a VNC server is set up fresh when you open the tab and torn down completely when you close it. Nothing is left running or installed afterward beyond the package itself (installed once, like any other apt/dnf package).
+- **macOS**: no third-party software at all — it's the Mac's own built-in Screen Sharing (the same thing "Remote Management" in System Settings controls), switched on only for the session with a fresh one-time password, and switched off again when you close the tab.
+
+A few things worth knowing:
+
+- On a **phone or tablet**, there's no physical keyboard to type with — a keyboard icon in the screen-share tab opens a tap-to-type input.
+- The **first** time you screen-share into a given Mac, macOS requires the Screen Recording permission to have been granted at least once *interactively, at that Mac itself* (System Settings → Privacy & Security → Screen Recording) — this can't be done remotely or via SSH by design (Apple's own hardening, so SSH access alone can never silently turn on remote screen viewing). If a session connects but shows a black screen, this is almost always why — go grant it once at the machine and it's a one-time fix per Mac.
+- Screen sharing to the local box requires either passwordless `sudo` or a stored sudo password on that Box's own connection record (Boxes → Local → Edit) — without one of those, starting a local session will tell you so directly.
 
 ## Licensing: Free vs. Pro
 

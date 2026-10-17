@@ -15,6 +15,7 @@ Every CLI agent runs through its native permission system *and* an OS-level sand
 ## Agents — precise control over what each one can do
 
 - Give each agent its own provider, model, system prompt, execution timeout (30 seconds to 2 hours), and working directory.
+- Six built-in **role templates** (Code Reviewer, Research Assistant, Summarizer, Writing Editor, Customer Support Agent, DevOps/Build Agent) pre-fill the system prompt and a sensible permission profile when creating an agent — a starting point to adjust, not a lock-in.
 - Choose a **permission profile** per agent: *Restricted* (read-only), *Workspace* (only the assigned directory is writable), or *Unrestricted* (full host compatibility) — enforced by the sandbox itself, not just requested of the model.
 - A small, non-negotiable safety baseline (mask secrets, never claim success without verifying) is appended to every agent automatically, regardless of any other setting.
 - Optionally bind an agent to a registered machine ("Box") — by default this just tells the agent how to connect over SSH and lets it decide whether to; a separate setting actually moves its execution onto that machine (see Machines, below).
@@ -42,6 +43,7 @@ This is where JunctionBox goes well beyond a single chat window:
 ## Structured identity and long-term memory
 
 - Give an agent a defined **role, tone, core values, and boundaries** through structured identity fields, layered on top of its free-text system prompt rather than replacing it. Every change is versioned — compare two versions field-by-field, test one against a real prompt, or restore an older one.
+- Six built-in **personality presets** (Friendly & Encouraging, Terse & Technical, Warm Mentor, Formal & Professional, Direct & Skeptical, Playful & Creative) fill in every structured identity field at once as a starting point to edit.
 - **Long-term memory** lets agents (or your whole setup) remember facts, preferences, decisions, and relationships across conversations — typed, sourced, and scored by confidence and importance.
 - Memory capture is deliberately deterministic (pattern-based, not model-guessed) and nothing is auto-approved: every captured memory sits in a review queue until you approve it, and anything that looks like a secret (API keys, tokens, card numbers) is never even suggested.
 - When a new memory supersedes an old one, the old one is kept and marked superseded — never silently overwritten — so you always have a trail.
@@ -62,8 +64,6 @@ This is where JunctionBox goes well beyond a single chat window:
 - A private, on-box **search engine** is set up automatically on install — genuinely free, no API key, no account, and reachable only from your own agents.
 - An open **plugin architecture** lets you extend JunctionBox with entirely new capabilities: your own backend routes, your own UI page (rendered in a sandboxed frame so a plugin's frontend can never read JunctionBox's session or the rest of the page), and your own MCP tools exposed to agents. Install a plugin as a single package — no approval queue, no waiting on anyone.
 - A **Plugin Builder** comes pre-installed from your very first launch: describe the plugin you want (an id, a name, a description) and it scaffolds a ready-to-install package — manifest, backend route stub, and a themed frontend stub — as a starting point for your own.
-- **Kubernetes** comes built in: register this machine or any remote machine over SSH as a Host, then create and manage disposable `kind` clusters — full lifecycle (create/start/stop/destroy/recreate) plus day-2 inspection of namespaces, pods, deployments, services, logs, and Helm releases. An extensible Cluster Plugins layer lets you register your own reusable `kubectl`/binary commands with typed parameters.
-- **iCloud Mail Cleanup** comes built in: connect an iCloud Mail account (an Apple app-specific password, never your Apple ID password) to declutter an inbox — sender-grouped scanning, manual trash/archive/unsubscribe, optional AI-assisted junk classification, and a guardrail-bounded automatic cleanup mode with per-run/per-day action caps and a protect-list, so an automated pass can never do more than the same buttons you'd click yourself.
 - **Dev Tools** gives every agent a `run_command` tool for tests, builds, and linters, scoped to that agent's own existing sandbox (no broader access than it already has running its CLI directly) — deliberately without an approval gate, since nothing it does ever leaves that sandbox.
 - The architecture is also proven against substantial personal-use integrations not bundled with JunctionBox core — guardrailed autonomous stock trading with hard position/ticker limits, multi-protocol smart-home control, AI image/video generation pipelines with identity-preserving face conditioning, and more — showing what a plugin here is actually capable of beyond what ships by default.
 
@@ -81,6 +81,7 @@ This is where JunctionBox goes well beyond a single chat window:
 - Two distinct ways to use a registered machine: give an agent its connection details so it can decide to SSH there itself, or actually **run the agent's own process on that machine** — its filesystem and shell tools then genuinely operate there, not through a mounted view.
 - A **Passthrough mode** for remote execution strips out everything JunctionBox-specific (safety baseline, delegation wiring, memory injection) so a remote agent runs with nothing but its own prompt and the CLI's native tools — useful when you want zero footprint beyond the agent itself.
 - Full interactive terminal access to any registered machine, local or remote, directly inside a chat tab.
+- **Screen sharing** with full mouse/keyboard control of any registered machine — including the machine JunctionBox itself runs on — in its own tab right alongside the terminal. Nothing is installed permanently to make it work: on Linux it's set up fresh for each session and torn down completely when you close the tab; on macOS it's the OS's own built-in Screen Sharing, switched on only for the session and off again afterward. Works from a phone or tablet browser too, with a tap-to-type on-screen keyboard button since there's no physical keyboard to use.
 
 ## Security and privacy by design
 

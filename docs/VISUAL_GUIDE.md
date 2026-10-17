@@ -12,6 +12,7 @@ All screenshots below are from a real running instance with real agents, real pr
 - [Chats](#chats)
 - [The output panel](#the-output-panel)
 - [Terminal access from a chat](#terminal-access-from-a-chat)
+- [Screen sharing from a chat](#screen-sharing-from-a-chat)
 - [Compare](#compare)
 - [Teams and the Orchestrator](#teams-and-the-orchestrator)
 - [Run History](#run-history)
@@ -62,6 +63,12 @@ Any background job — a scheduled run, a plugin action, a long-running task —
 From inside a chat, if the agent is tied to a registered machine ("Box"), you can open a real interactive terminal to that machine as its own tab — right next to the chat tab, no separate app or SSH client needed.
 
 ![Terminal from chat](images/terminal.png)
+
+## Screen sharing from a chat
+
+Full remote control — mouse and keyboard, not just a view — of any registered Box, in its own tab right alongside the chat and terminal tabs. Nothing is installed permanently: on Linux a VNC server is set up fresh for the session and torn down when you close the tab, and on macOS it's the OS's own built-in Screen Sharing, switched on only for the session and off again afterward. Works on the machine JunctionBox itself runs on too, and from a phone or tablet browser, with a tap-to-type on-screen keyboard button since there's no physical keyboard to use.
+
+![Screen share from chat](images/screen-share.png)
 
 ## Compare
 

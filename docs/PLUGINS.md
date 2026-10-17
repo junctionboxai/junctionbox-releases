@@ -16,6 +16,14 @@ Links your own Ring account (email/password with 2FA) to sync doorbells, cameras
 
 A full Messages client for your BlueBubbles-connected Mac: conversation list and history, sending text and attachments, unsending, an emoji picker, and a "new message" compose view with recipient autocomplete from your synced contacts.
 
+## iCloud Mail
+
+Link an iCloud account (app-specific password, no OAuth) and manually review + clean up spam, subscriptions, and old mail — nothing is deleted or sent without you clicking a specific action on a specific batch. An optional guardrail-bounded automatic cleanup mode can trash AI-flagged junk, archive old read mail, and send mailto unsubscribes on a recurring schedule, capped by limits you set.
+
+## Kubernetes
+
+Register this machine or any remote machine over SSH as a Host, then create and manage disposable `kind` clusters — full lifecycle (create/start/stop/destroy/recreate) plus day-2 inspection of namespaces, pods, deployments, services, logs, events, port-forwards, and Helm releases. An extensible Cluster Plugins layer lets you register your own reusable `kubectl`/binary commands with typed parameters.
+
 ## Stickers
 
 A personal sticker library. Upload an image, or describe one and have it generated through a connected AI image provider. Runs as a background job with live status and retry-on-failure, and exposes a tool so your agents can generate an image directly.
