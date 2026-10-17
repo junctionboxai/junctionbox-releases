@@ -27,7 +27,7 @@ JunctionBox is single-user software (one password, no roles) — there's no sepa
 ## Getting started
 
 1. Install JunctionBox per `deploy/README-release.md`, then open `http://127.0.0.1:8000` **on that machine**.
-2. On first visit you'll set an access password (8+ characters) and accept the EULA. This step only works from the machine JunctionBox is running on, even through the HTTPS proxy below — nothing else about JunctionBox works until it's done.
+2. On first visit you'll set an access password (8+ characters) and accept the EULA — nothing else about JunctionBox works until it's done. This also works through the HTTPS proxy below, from any device on your LAN, so set a real password promptly after install.
 3. Log in with that password going forward. There's no "forgot password" flow — if you lose it, you'd need direct access to the machine to reset it (see Administration below).
 4. You'll land on the **Dashboard**: a summary of agents, providers, MCP tools, and recent activity, with a 3-step getting-started checklist until your first run exists.
 5. A **JunctionBox Support** agent is already there, auto-created — ask it how to use JunctionBox, or whether core services are running, at any time. It's protected (can't be deleted or have its prompt edited) and never appears as a delegation target for your other agents.
