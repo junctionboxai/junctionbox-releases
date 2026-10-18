@@ -64,6 +64,10 @@ A real, isolated Chromium browser streamed live into a plugin tab, routed throug
 
 The same real-browser architecture as SubBrowser, but with no Tor and one persistent profile — for browsing personally from a restricted device in a way that appears, to the outside world, as wherever JunctionBox itself is hosted.
 
+## TV Player
+
+A grid of streaming-TV provider tiles (YouTube, YouTube TV, Hulu, Netflix, Prime Video, Max, Disney+, plus any others you add). None of these sites allow themselves to be embedded, so a small companion browser extension (installed once, download link right in the plugin's Settings tab) opens whichever one you pick as a real, native browser window on your own device — full video and audio, no lag, same as opening the site yourself, just one click from the dashboard. You log in the normal way, directly on the provider's own site; nothing about your account is stored in JunctionBox. Add your own providers beyond the built-in list with just a name and a URL.
+
 ---
 
 For what ships in JunctionBox by default, see FEATURES.md. For installation, see INSTALL.md.
