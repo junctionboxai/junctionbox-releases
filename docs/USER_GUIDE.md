@@ -127,14 +127,28 @@ Connect one or more Telegram bots (via @BotFather tokens) to talk to a specific 
 - By default, the agent is just told about the box (connection details in its prompt) and decides for itself whether to SSH there.
 - **Remote execution** (`run_remote_on_box`, set per agent) actually moves the agent's own execution onto that box — its filesystem/shell tools genuinely operate there, not a local sandbox.
 
+### Windows boxes
+
+Windows targets work the same way, over the same SSH trust boundary, but need one manual one-time step first: Windows doesn't ship its OpenSSH **Server** turned on by default (only the client). From an elevated PowerShell prompt *on the Windows box itself* (e.g. over RDP):
+
+```powershell
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType Automatic
+New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+```
+
+After that, automatic setup in Boxes works exactly like Linux/macOS — pick **Windows** in the Target OS selector there, use the box's actual local-administrator account (the built-in `Administrator` account works best), and the guided flow handles the rest. This matters specifically because Windows has no `sudo`: System Operations' privileged scripts and remote agent execution both need the SSH session itself to already be elevated, which an actual local-administrator account gives you automatically — a regular user account, even one in the Administrators group, may not. Terminal works unmodified (Windows OpenSSH gives a genuine interactive PTY via ConPTY), defaulting to `cmd.exe` unless you've set the box's own `DefaultShell` registry value to PowerShell.
+
 ## Screen sharing
 
 From a Box's card, click **Screen Share** for full mouse-and-keyboard remote control of that machine, in its own tab right alongside Chat and Terminal — not just a view, real input. This works for any registered Box, including the machine JunctionBox itself runs on ("Local").
 
-Nothing is installed permanently:
+Nothing is installed permanently on the *target* machine:
 
 - **Linux**: a VNC server is set up fresh when you open the tab and torn down completely when you close it. Nothing is left running or installed afterward beyond the package itself (installed once, like any other apt/dnf package).
 - **macOS**: no third-party software at all — it's the Mac's own built-in Screen Sharing (the same thing "Remote Management" in System Settings controls), switched on only for the session with a fresh one-time password, and switched off again when you close the tab.
+- **Windows**: a VNC server (TightVNC) is installed automatically the first time you screen-share into a given box — nothing to set up by hand, on either the Windows box or the JunctionBox host. It's left installed afterward (same product decision as Linux), but only ever actually running for the life of a session, same as Linux's VNC server. Unlike Linux/macOS, this needs the target Windows account to have logged into a real session (console or RDP) at least once before Screen Share can find a desktop to attach to — if it hasn't, starting a session will tell you so directly.
 
 A few things worth knowing:
 
