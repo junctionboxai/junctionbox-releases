@@ -24,6 +24,10 @@ Link an iCloud account (app-specific password, no OAuth) and manually review + c
 
 Register this machine or any remote machine over SSH as a Host, then create and manage disposable `kind` clusters — full lifecycle (create/start/stop/destroy/recreate) plus day-2 inspection of namespaces, pods, deployments, services, logs, events, port-forwards, and Helm releases. An extensible Cluster Plugins layer lets you register your own reusable `kubectl`/binary commands with typed parameters.
 
+## Image Finish
+
+Local, ordinary image finishing: upload an image and get back a version with autocontrast, a subtle contrast boost, and a subtle sharpness boost applied — the same kind of adjustment any photo tool makes. Nothing leaves JunctionBox.
+
 ## Stickers
 
 A personal sticker library. Upload an image, or describe one and have it generated through a connected AI image provider. Runs as a background job with live status and retry-on-failure, and exposes a tool so your agents can generate an image directly.
