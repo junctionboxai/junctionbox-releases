@@ -46,7 +46,7 @@ Find out whether an image is AI-generated, and see why. Drop, paste or link any 
 
 ## Time Machine
 
-Turn a photo of your house, a church, a barn, a storefront, or a street into a convincing old photograph of it from back in the day: under construction with timber scaffolding and workers, the day it was finished, or in its early years. The print can be a daguerreotype, a sepia print, a glass plate, or whatever suits the year. The building's architecture and the original camera angle are kept. Generate with the Codex or Grok CLI or a ComfyUI server you run. Each result automatically gets the same contrast-and-sharpness finishing as Image Finish. Keep your favorites, compare them side by side with today, and fine-tune the old-photo look in a built-in darkroom.
+Turn a photo of your house, a church, a barn, a storefront, or a street into a convincing old photograph of it from back in the day: under construction with timber scaffolding and workers, the day it was finished, or in its early years. The print can be a daguerreotype, a sepia print, a glass plate, or whatever suits the year. Or go forward in time: the same place decades or centuries from now, still lived in, renovated with future technology, a landmark with the city grown up around it, abandoned, reclaimed by nature, under rising waters, or in ruins being excavated by future archaeologists, captured on the camera of that year. The building's architecture and the original camera angle are kept. Generate with the Codex or Grok CLI or a ComfyUI server you run. Each result automatically gets the same contrast-and-sharpness finishing as Image Finish. Keep your favorites, compare them side by side with today, and fine-tune the old-photo look in a built-in darkroom.
 
 ## Comic Studio
 
