@@ -40,6 +40,14 @@ Takes a photo you upload and renders it at a different apparent age, preserving 
 
 Organizes AI-generated concept-art shots into ordered project sequences, with an identity-preserving path for scenes involving one or two specific people. An optional AI prompt-helper turns a rough idea into a full generation prompt.
 
+## AI Image Detector
+
+Find out whether an image is AI-generated, and see why. Drop, paste or link any image. AI Detector checks it for signed Content Credentials from AI generators and cameras, for generator labels hidden in the file, and for Stable Diffusion's invisible watermark. It also scores the pixels with a dedicated open-source detector model that runs on your own hardware: this JunctionBox or another machine you've added. Every verdict explains itself in full. It names the rule that decided it, then lists each check with what it found, which way it points, and why it did or didn't count, including the checks that found nothing. Honest cautions come with it, for example that scans of genuine old photos occasionally get flagged. An optional Codex or Grok second opinion explains what looks off, but never changes the verdict. The detector model is a one-time download of about 560 MB from inside the plugin, and runs on Linux (x86_64/arm64) and macOS (Apple Silicon/Intel). Agents can check images too.
+
+## Time Machine
+
+Turn a photo of your house, a church, a barn, a storefront, or a street into a convincing old photograph of it from back in the day: under construction with timber scaffolding and workers, the day it was finished, or in its early years. The print can be a daguerreotype, a sepia print, a glass plate, or whatever suits the year. The building's architecture and the original camera angle are kept. Generate with the Codex or Grok CLI or a ComfyUI server you run. Each result automatically gets the same contrast-and-sharpness finishing as Image Finish. Keep your favorites, compare them side by side with today, and fine-tune the old-photo look in a built-in darkroom.
+
 ## Comic Studio
 
 A full comic-strip production system: universes, characters with versioned appearance history, strips, and panels. AI-assisted scripting and panel art, speech balloons, and diegetic in-panel sign/screen text. Finished strips bind into full Books, exportable as a screen PDF or a print-ready interior/cover PDF pair.
