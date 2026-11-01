@@ -100,6 +100,7 @@ alongside the binaries in every release archive:
 - [`docs/VISUAL_GUIDE.md`](docs/VISUAL_GUIDE.md) — a screenshot tour of every major feature
 - [`docs/FEATURES.md`](docs/FEATURES.md) — what JunctionBox can do, at a glance
 - [`docs/PLUGINS.md`](docs/PLUGINS.md) — optional plugins you can install
+- [`docs/ROKU_LAUNCHER.md`](docs/ROKU_LAUNCHER.md) — the Roku Launcher plugin: turning on Roku developer mode and installing the launcher on your TVs
 - [`docs/JUNCTIONBOX_PLUGIN_CONTEXT.md`](docs/JUNCTIONBOX_PLUGIN_CONTEXT.md) — the plugin format, for writing your own
 - [`docs/DEPLOYMENT_SECURITY.md`](docs/DEPLOYMENT_SECURITY.md) — how to safely expose JunctionBox beyond `127.0.0.1`
 - [`docs/EULA.md`](docs/EULA.md) — the license terms you agree to by installing JunctionBox

@@ -48,6 +48,16 @@ Find out whether an image is AI-generated, and see why. Drop, paste or link any 
 
 Turn a photo of your house, a church, a barn, a storefront, or a street into a convincing old photograph of it from back in the day: under construction with timber scaffolding and workers, the day it was finished, or in its early years. The print can be a daguerreotype, a sepia print, a glass plate, or whatever suits the year. Or go forward in time: the same place decades or centuries from now, still lived in, renovated with future technology, a landmark with the city grown up around it, abandoned, reclaimed by nature, under rising waters, or in ruins being excavated by future archaeologists, captured on the camera of that year. The building's architecture and the original camera angle are kept. Generate with the Codex or Grok CLI or a ComfyUI server you run. Each result automatically gets the same contrast-and-sharpness finishing as Image Finish. Keep your favorites, compare them side by side with today, and fine-tune the old-photo look in a built-in darkroom.
 
+## Watch List
+
+A shelf for videos you want to watch later. Paste a link (or many at once), add a note, pin the ones you want first, and tick them off when you've watched them. Titles are looked up for you. Pair it with **Roku Launcher**: your saved links appear on the Web Video start page on your Roku, and a saved YouTube link opens in the Roku's own YouTube app.
+
+## Roku Launcher
+
+Gives your Roku TVs and boxes a custom home screen: your streaming apps as big tiles (using the artwork the TV already has), the weather, and a row of JunctionBox controls for Home Control lights and air conditioning, Ring Security snapshots and live view, Video Studio, Photos (Stickers, Age Shift, Storyboard, Time Machine), and Book Studio and Comic Studio PDFs. The TV returns to the launcher by itself when you leave an app. **Web Video** shows a browser from your computer on the TV and plays the videos it finds in the Roku's own player.
+
+The plugin does the set-up for you: it starts the small background program the TV talks to, finds your Rokus on the network, and installs the launcher onto each one with a click, then keeps them up to date. You turn on developer mode on each Roku once. The step-by-step guide, including exactly how to turn on developer mode and troubleshooting, is `docs/ROKU_LAUNCHER.md`. Works on Linux and macOS; Python 3.9 or newer is needed, and ffmpeg, poppler and Google Chrome unlock Ring live view, PDF books and Web Video.
+
 ## Comic Studio
 
 A full comic-strip production system: universes, characters with versioned appearance history, strips, and panels. AI-assisted scripting and panel art, speech balloons, and diegetic in-panel sign/screen text. Finished strips bind into full Books, exportable as a screen PDF or a print-ready interior/cover PDF pair.
