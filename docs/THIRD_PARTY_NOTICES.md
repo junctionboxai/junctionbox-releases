@@ -8,7 +8,7 @@ Engine, generated directly from `backend/requirements.txt` and
 `frontend/package.json` rather than compiled by hand — see the
 regeneration instructions below.
 
-## Copyleft component — read this one
+## Copyleft components — read these
 
 **`paramiko` 3.5.1** is licensed under the **GNU Lesser General Public
 License (LGPL)**, not a permissive license like the rest of this list.
@@ -18,6 +18,16 @@ binary. This is the normal, low-risk way to consume an LGPL Python
 library, but LGPL compliance is a real legal question, not a formality:
 if `paramiko` is ever modified, vendored, or statically linked in a future
 change, get that reviewed before shipping it.
+
+**`@novnc/novnc` 1.7.0** is licensed under the **Mozilla Public License
+2.0 (MPL-2.0)**, a file-level (not whole-program) copyleft license.
+JunctionBox uses it unmodified, imported as an ordinary npm dependency
+(the Screen Sharing feature's frontend) — it is not forked or vendored
+with local changes. MPL-2.0 only requires that the library's own source
+files stay available under MPL-2.0 terms (already true: it's public on
+npm and at github.com/novnc/noVNC), not that the rest of JunctionBox be
+relicensed. If it's ever forked or modified in a future change, get that
+reviewed before shipping it.
 
 Every other component below is under a permissive license (MIT, BSD,
 Apache-2.0, ISC, or similar) with no comparable restriction.
@@ -71,6 +81,7 @@ Generated from `backend/requirements.txt`'s pinned dependency closure (see that 
 | idna | 3.18 | BSD-3-Clause |
 | jiter | 0.16.0 | MIT |
 | multidict | 6.7.1 | Apache License 2.0 |
+| numpy | 2.2.3 | BSD-3-Clause (wheels bundle OpenBLAS, BSD-3-Clause, and libgfortran, GPL-3.0 with GCC Runtime Library Exception) |
 | openai | 2.41.1 | Apache Software License |
 | paramiko | 3.5.1 | GNU Library or Lesser General Public License (LGPL) |
 | propcache | 0.5.2 | Apache Software License |
@@ -107,6 +118,7 @@ Generated from `frontend/package.json`'s production dependency closure (`npx lic
 | @floating-ui/utils | 0.2.12 | MIT |
 | @monaco-editor/loader | 1.7.0 | MIT |
 | @monaco-editor/react | 4.7.0 | MIT |
+| @novnc/novnc | 1.7.0 | MPL-2.0 |
 | @phosphor-icons/react | 2.1.10 | MIT |
 | @radix-ui/primitive | 1.1.5 | MIT |
 | @radix-ui/react-arrow | 1.1.11 | MIT |
@@ -218,3 +230,32 @@ Full per-package license text is available in each package's own
 distribution (`node_modules/<package>/LICENSE` and the installed Python
 package's own metadata) and is not reproduced here in full; this table is
 the attribution and license-identification record itself.
+
+## Bundled with the optional Historical Intelligence plugin
+
+| Package | Version | License |
+|---|---|---|
+| pypdf (`plugins/source/historical-intelligence/backend/vendor/pypdf/`, reads text from PDF sources; license text in the package's `dist-info/licenses`) | 5.4.0 | BSD-3-Clause |
+
+## Bundled with the optional Smart TV Launcher plugin
+
+| Package | Version | License |
+|---|---|---|
+| hls.js (`plugins/source/smart-tv-launcher/launcher/bridge/gtv/hls.min.js`, a fallback video player for the Google TV launcher's web pages; copyright Dailymotion) | 1.5.17 | Apache-2.0 |
+| DejaVu Sans Mono fonts (`plugins/source/smart-tv-launcher/launcher/bridge/fonts/`, used to draw the Claude, Codex and Grok terminal pictures) | 2.37 | Bitstream Vera / DejaVu license (free to use and redistribute) |
+| DejaVu Serif fonts (`plugins/source/smart-tv-launcher/launcher/tools/fonts/`, used to draw the Bible PDFs; license text alongside) | 2.37 | Bitstream Vera / DejaVu license (free to use and redistribute) |
+| Noto Serif Ethiopic font (same folder, used for the Amharic Bible) | 2.x | SIL Open Font License 1.1 |
+
+### Bible texts bundled with the Smart TV Launcher plugin
+
+Stored in `plugins/source/smart-tv-launcher/launcher/bibles/`. All five English texts are in the public domain.
+
+| Text | Status |
+|---|---|
+| King James Version (1769 text) | Public domain. In the United Kingdom the KJV is covered by a Crown letters patent. |
+| American Standard Version (1901) | Public domain |
+| Douay-Rheims Bible (Challoner revision) | Public domain |
+| Catholic Public Domain Version (CPDV) | Dedicated to the public domain by its translator |
+| World English Bible | Public domain (dedicated by its publishers) |
+| Ethiopian Bible (English, with the extra books) | Public domain, as supplied by the project owner |
+| Amharic Bible | Public domain, as supplied by the project owner |
