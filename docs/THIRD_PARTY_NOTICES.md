@@ -245,6 +245,8 @@ the attribution and license-identification record itself.
 | DejaVu Sans Mono fonts (`plugins/source/smart-tv-launcher/launcher/bridge/fonts/`, used to draw the Claude, Codex and Grok terminal pictures) | 2.37 | Bitstream Vera / DejaVu license (free to use and redistribute) |
 | DejaVu Serif fonts (`plugins/source/smart-tv-launcher/launcher/tools/fonts/`, used to draw the Bible PDFs; license text alongside) | 2.37 | Bitstream Vera / DejaVu license (free to use and redistribute) |
 | Noto Serif Ethiopic font (same folder, used for the Amharic Bible) | 2.x | SIL Open Font License 1.1 |
+| noVNC (`plugins/source/smart-tv-launcher/launcher/bridge/novnc/core`, the VNC viewer the headless browser opens for Screen Share; unmodified, license text in `novnc/LICENSE.txt`, source at github.com/novnc/noVNC) | 1.7.0 | MPL-2.0 |
+| pako (`novnc/vendor/pako`, used by noVNC; license text alongside) | as bundled with noVNC 1.7.0 | MIT |
 
 ### Bible texts bundled with the Smart TV Launcher plugin
 
