@@ -114,15 +114,16 @@ One list holds every TV, with a badge for its kind.
 
 The key is a random token created on your computer, stored only in `~/.roku-launcher/token` (readable only by you) and inside the app on your TVs. The bridge ignores requests without it.
 
-**Google TV: make it the Home screen.** When you like how the launcher looks on a Google TV, press **Make it the Home screen** on its row, so the Home button opens it. **Restore Google Home** puts things back at any time, and removing the TV can also delete the app and restore Google's Home screen. The plugin checks that the TV accepted the change. If a TV refuses (the newer Google TV home screen often can't be replaced), the launcher still works as an app you open from the app row.
+**Google TV: make it the Home screen.** When you like how the launcher looks on a Google TV, press **Make it the Home screen** on its row, so the Home button opens it. **Restore Google Home** puts things back at any time, and removing the TV can also delete the app and restore Google's Home screen. The plugin checks that the TV accepted the change. Some Android 14 Google TVs accept the setting but keep sending the Home button to Google's own home app; for those the plugin also switches Google's home app off (`pm disable-user`), which makes the Home button open the launcher, and **Restore Google Home** switches it back on. While it is off, the launcher's *Go to the Google TV home screen* does nothing, so use **Restore Google Home** first. If a TV refuses both, the launcher still works as an app you open from the app row.
 
 ### 4. Choose what the home screen shows
 
 - **Weather location**: search for your town and press **Use**.
 - **Apps on the home screen** (Roku): press **Pick from this TV's apps** to list the channels actually installed on a Roku, tick the ones you want as tiles, put them in order with the arrows, and press **Save apps**. Tile pictures come from the TV itself.
 - **Apps on Google TV tiles**: the same, from a Google TV's installed apps. Tiles for apps that aren't installed on a particular TV are hidden on that TV.
+- **Quotes**: the line at the bottom of the home screen (Roku and Google TV). Type your own, one per line, and press **Save quotes**. Until you do, the TVs show a standard set of short, neutral lines. **Use the standard set** puts them back, and unticking **Show a quote** hides the line on every TV (your list is kept). Repeats and blank lines are dropped, a quote can be up to 240 characters, and you can keep up to 500. A TV picks up changes within a few minutes of its next refresh, or the next time the launcher opens.
 
-Changes show up the next time the launcher opens on the TV.
+Other changes show up the next time the launcher opens on the TV.
 
 ### 5. Bibles to read on the TV
 
@@ -153,9 +154,9 @@ make_bibles.py --copy "Some Bible.pdf" some-id "Title" "Subtitle"   # a PDF you 
 
 Output goes to the `bibles` folder inside the launcher's data folder (`~/.roku-launcher/bibles`) and appears in Books straight away. A PDF you copy in has no contents until you add a small `<id>.json` beside it: `{"title": ..., "subtitle": ..., "byline": ..., "toc": [{"n": "Genesis", "p": 12, "c": [[1, 12], [2, 14]]}, ...]}` where `n` is the book name, `p` its first page and `c` pairs of chapter and page. Books with a contents list get the Old Testament, New Testament, book and chapter menus; without one a Bible opens as a plain PDF. Pages are exact only when you give exact pages. Amharic and other Ethiopic text is supported (the launcher ships Noto Serif Ethiopic; for your own files pass a font with `--font-ethiopic`). A book can carry a study guide as its chapter `0`: the generator lays it out as described above from lines such as `--- STUDY GUIDE: Title ---`, `AUTHOR: ...`, `--- BACKGROUND ---`, `1. THEME (Chapters 1, 17): explanation`, `• bullet`, `'A quoted verse' (3:16)`. The book list must keep the Bible's order, with the New Testament starting at *Matthew*, so the Old Testament / New Testament buttons come out right.
 
-### 6. Claude, Codex, Grok, box shells and screen share on the TV
+### 6. Claude, Codex, Grok, box shells, screen share and agents on the TV
 
-Adds **Claude**, **Codex**, **Grok**, **Box Shells** and **Screen Share** tiles to the home screen of every TV (Screen Share is on the Roku; the Google TV version is not built yet). Each opens a terminal showing that coding agent running **on the JunctionBox computer**, in your home folder.
+Adds **Claude**, **Codex**, **Grok**, **Box Shells**, **Screen Share** and **Agents** tiles to the home screen of every TV, Roku and Google TV. A **Recipes** tile opens your recipes from the separate **Recipes** plugin. Each opens a terminal showing that coding agent running **on the JunctionBox computer**, in your home folder.
 
 **Permissions.** Card 6 has a Permissions drop-down for each agent, so you decide how much it may do without asking. The default for all three is the agent's normal ask-first mode. A choice applies the next time that agent starts (a running session keeps its mode; use **End it** and open the tile again). Modes marked *dangerous* are flagged on the card.
 
@@ -185,6 +186,33 @@ In the ask-first modes the agent's questions appear on the TV; answer with the q
 ![The menu: click, drag, zoom, keys and shortcuts](images/roku/screen-share-menu.jpg)
 
 ![Zoomed to 2x so small text is readable](images/roku/screen-share-zoom.jpg)
+
+**Agents** is a chat with your JunctionBox agents, from the couch. It is not a terminal: you pick one of the agents you already have in JunctionBox (any provider), talk to it, and watch it work.
+
+- **The same run as in the web app.** A TV chat is an ordinary JunctionBox run, started through JunctionBox's own code, so the agent keeps its own permission profile, sandbox, system prompt and memory, and the run shows up in JunctionBox's run history. Nothing about the agent is loosened for the TV.
+- **Same PIN as the terminals.** The TV asks for it when you open Agents, and the tile does nothing until the PIN is set on card 6.
+- **Start a chat, or pick one up.** The menu has *Start a new chat* (pick an agent), *Chats* (your earlier TV chats, with a note on any that are working or waiting for you) and *Recent runs* (everything the agents have done, including runs from the web app and schedules; open one to read it and carry on from there).
+- **Typing.** Type on the Roku phone app's keyboard, or press OK or Play for the TV's keyboard. Typed text goes when you pause for a few seconds, or when you press OK. A chat takes one message at a time; an agent that is still working says so.
+- **Live activity.** The reply is drawn as it arrives, with the agent's tool calls shown as dim lines. In the menu you can show its thinking, hide the tool lines, scroll, and stop the agent. Up and Down scroll; Rewind and Fast-forward scroll a page.
+- **Approvals and questions.** When an agent in an ask-first permission profile needs a tool approved, a box appears on the TV with the tool and what it will do: **Approve**, **Deny** or **Not now**. When an agent asks you something, the TV's keyboard opens for your answer. These are the same requests the web app shows, so you can answer them in either place.
+- **Pop-ups.** When the agent finishes, hits a problem, needs an approval or asks a question, a small card appears in the corner of the screen, even while you are somewhere else in the launcher. **It only appears on the TV that started or reopened the chat**, never on the other TVs. Turn pop-ups off for one TV in the Agents menu (*Pop-ups on this TV*), or for every TV with the checkbox on card 6. Pop-ups need the PIN to have been entered on that TV since the app opened; they stop when you choose *Sign out* in the Agents menu, or when the session has been idle for 15 minutes and nothing is still working. A TV with an agent still working keeps getting its pop-ups for up to four hours.
+- **Safety.** An agent can run commands, so Agents is guarded like the terminals: off until a PIN is set, five wrong tries lock it for five minutes, and a session ends after 15 idle minutes. Reading pop-ups never extends a session. Chats are kept on your computer in the launcher's data folder (`~/.roku-launcher/agent-chats`, the newest 40).
+
+**Recipes** shows the recipes you keep in the separate **Recipes** plugin, one page per recipe. Install that plugin and add recipes there (write them, paste them, or import them from a web link or a file); nothing needs setting up on the TV, and Recipes does not use the terminal PIN.
+
+- **One page you scroll.** A recipe is its name and the steps, with the ingredients and amounts written into the steps. It fills the screen; Up and Down scroll it. The list shows favorites first, then A to Z; `*` searches the names and the steps.
+- **Pictures.** A recipe can have pictures (add them on the Recipes page). On the TV the first one shows on the right of the recipe; the menu has *Next picture*, *Hide the picture* and *Picture size*. When you start a video it takes the picture's place, and the picture comes back when the video stops. The phone page shows the pictures above the steps.
+- **Watch something beside it.** Press OK (or `*`) in a recipe and choose *Watch something beside the recipe*. The recipe moves to the left and a video plays on the right, small or large. You can pick one of your saved streams (the Media Player list) or a page from your Watch List: the launcher opens the page in its own browser, waits for the video to start and hands it to the TV's player. Press **Right** to select the video's controls under it (pause or play, back 10 seconds, forward 10 seconds, size, full screen, stop), Left and Right to choose, OK to use one, Up, Down or Back to return to scrolling the recipe. The remote's Play, Rewind and Fast-forward keys also work. **Full screen** (the *Full* button, or *Full screen video* in the menu) gives the video the whole screen: Left and Right jump 10 seconds, OK or Play pauses, and Back returns to the recipe with the video still playing. A live video can't be rewound. If the TV's player refuses a stream, it tries once more through your computer. *Text size* and *Video size* are in the same menu.
+- **Browse the web for a video.** *Browse the web for a video (Web Video)* in the same menu opens Web Video inside Recipes. Go to any site, start its video the way you normally do in Web Video, and press Play: instead of filling the screen, the video plays beside the recipe. Back leaves without choosing. If the page is a YouTube link it shows the phone code instead (see below).
+- **YouTube, Netflix and the other apps.** A Roku does not let one app draw on top of another, and YouTube's video can't be handed to our player, so those can't sit beside the recipe on the TV. Choose *Follow on your phone (QR code)*: scan it and the recipe opens on your phone, large, with a switch that keeps the screen awake and a tap-to-cross-off for each step. Then press Home and start anything on the TV. Choosing a YouTube link from the Watch List shows the same code. The link works for 12 hours and only for that recipe.
+- **QR code needs one small add-on.** The bridge installs it with the rest (`segno`). If the code doesn't show, press *Start* on the bridge again on card 1; the TV shows the plain link meanwhile.
+
+**On a Google TV** Recipes, Agents and Screen Share work the same way, with the Google TV remote: arrow keys move and scroll, OK chooses, **Menu** (or `*`) opens the menu, and Back goes up a level. Text boxes use the TV's on-screen keyboard (press OK on the box), or a USB or Bluetooth keyboard. Differences from the Roku:
+
+- **Recipes, video beside the recipe.** The video plays in the page itself. A saved stream plays as it is; a Watch List page, or an address you type under *Browse the web for a video*, is opened in the background on your computer and the video it plays is sent to the TV (through your computer when the TV's player can't take it directly). The video controls (pause, back and forward 10 seconds, size, full screen, stop) work as on the Roku: press Right to reach them.
+- **YouTube and other apps.** *Float the recipe over another app* (picture-in-picture) shrinks the launcher into a corner window, shows the recipe one step at a time, and the window's own Previous and Next buttons turn the steps. **It only appears on a TV that supports picture-in-picture, and many Google TVs don't.** On those, a YouTube link offers the phone code instead, the same as on a Roku.
+- **Pop-ups** for Agents appear in the top right on any screen once you have signed in to Agents on that TV, and only on the TV that started the chat. Screen Share and Agents share one PIN sign-in on the TV; leaving Screen Share signs out unless Agents pop-ups are on.
+- **Updating.** The pages update with the bridge. The Google TV app itself (version shown on the Google TVs card) only needs reinstalling when the plugin says an update is available; version 1.1.1 added the picture-in-picture support.
 
 Each agent and each box has its own session, so you can leave Codex working, have a shell open on two boxes, and open Claude. They keep running when you leave; close the app and come back to the same conversation. A tile whose command isn't installed says so when you open it. A box that is switched off or unreachable shows the ssh error on the screen. Card 6 shows which of the three were found.
 
@@ -218,7 +246,7 @@ Only open this on a network you trust: anyone who knows the PIN and can reach th
 ### How the two kinds differ
 
 - **Home screen.** On a Roku, the bridge watches the TV and sends it back to the launcher when you leave an app (auto-return). On a Google TV the launcher is the Home screen itself, so the Home button comes back to it.
-- **Screens.** The Roku launcher is a native Roku app. The Google TV launcher is a small Android app that shows pages served by the bridge, so those screens update without reinstalling anything. Both have the same screens: apps, weather, Home Control, Ring Security, Video Studio, Photos, Books, Box Status and Media Player, and the Watch List. **Web Video** is Roku-only, because Google TVs already have real browsers.
+- **Screens.** The Roku launcher is a native Roku app. The Google TV launcher is a small Android app that shows pages served by the bridge, so those screens update without reinstalling anything. Both have the same screens: apps, weather, Home Control, Ring Security, Video Studio, Photos, Books, Box Status and Media Player, and the Watch List. **Web Video** (the remote-controlled browser) is Roku-only, because Google TVs already have real browsers. The newer tiles (**Recipes**, **Agents**, **Screen Share**) are on both; on a Google TV they are pages in `launcher/bridge/gtv/` (`recipes.js`, `agents.js`, `share.js`, with shared menus, text box and PIN pad in `ui.js`), so they update with the bridge.
 - **Building the Google TV app yourself.** The app's sources and a build script that needs only the Android command-line tools are in `launcher/android` (see For developers).
 
 ## Using the launcher on the TV
@@ -266,7 +294,11 @@ Only open this on a network you trust: anyone who knows the PIN and can reach th
 | Screen Share says it needs the Web Video part | Install **Web Video** in card 2 (it brings the browser Screen Share uses), then try again. |
 | Screen Share says it couldn't find a graphical session | The box needs someone logged in at its desktop; JunctionBox can't share a box that is at a login screen with nobody signed in. The same message appears in the web app. |
 | A terminal tile says the command was not found | Install that tool on the computer (Claude Code, Codex or Grok) and sign in to it there once. Card 6 shows which of the three were found. |
-| "The terminal is off" | Set a terminal PIN on card 6. |
+| "The terminal is off" | Set a terminal PIN on card 6 (it also unlocks Agents). |
+| Agents shows no pop-ups | Pop-ups only go to the TV that started the chat, only after the PIN was entered on that TV, and not when they are off for that TV (Agents menu) or for every TV (card 6). |
+| Recipes says the plugin isn't installed | Install **Recipes** from the Plugins page; the TV reads its recipes from there. |
+| No video starts beside the recipe | Some pages wait for a click before they load a video. Open the page once in Web Video, or save a direct stream in Media Player. |
+| An agent in Agents says it is inactive | Activate it on JunctionBox's Agents page; the TV uses the same agents. |
 | "Wrong PIN" or "locked" | Five wrong tries lock all three terminals for five minutes. Wait, or set a new PIN on card 6. |
 | "The terminal session timed out" | You were away for more than 15 minutes, or the bridge restarted. Open the tile again and enter the PIN. |
 | A terminal ended straight away | Claude's first question about trusting the folder defaults to "No, exit". Open the tile again and press **Down** then **OK** to trust it. When an agent has ended, **OK** starts it again. |
@@ -281,6 +313,7 @@ The bridge's log is `~/.roku-launcher/bridge.log`; **Show log** displays the end
 - The Roku **developer password** is stored encrypted in the JunctionBox database. It's used only to install the launcher on your own TVs.
 - The bridge reads your JunctionBox data folder read-only (photos, videos, books). It never writes to the JunctionBox database. For Home Control and Ring Security, JunctionBox hands the bridge each plugin's private secret in memory, over the local connection only, using a second token that never goes onto a TV.
 - Anything your plugins mark as hidden stays hidden, and password-protected photo groups appear locked with nothing inside, on the TV too.
+- The Agents tile lets a TV talk to your JunctionBox agents, which can act on your computer, so it uses the terminal PIN and the same lockout and idle limits, goes through JunctionBox's own run code (the agent's permissions apply), and only ever sends a pop-up to the TV that started the chat.
 - The Claude, Codex and Grok terminals are a remote shell for the account that runs the bridge. They are off until you set a PIN, ask for it every time, lock after five wrong tries and sign out after 15 idle minutes; the PIN is stored only as a salted hash. Box shells reach every box you've added to JunctionBox with the credentials JunctionBox already holds for it, so a PIN holder has the same access to those boxes as you do from JunctionBox's own terminal. Each agent starts in the permission mode you chose on card 6, so a "do everything" mode means anyone with the PIN can act as you on that computer. Only use it on a network you trust.
 - Don't expose the bridge's port to the internet.
 
