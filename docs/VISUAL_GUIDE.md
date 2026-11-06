@@ -22,6 +22,7 @@ All screenshots below are from a real running instance with real agents, real pr
 - [Telegram and iMessage](#telegram-and-imessage)
 - [MCP Servers](#mcp-servers)
 - [Plugins](#plugins)
+- [Smart TV Launcher: your Roku and Google TV home screen](#smart-tv-launcher-your-roku-and-google-tv-home-screen)
 - [Boxes: remote machines and terminals](#boxes-remote-machines-and-terminals)
 - [Licensing](#licensing)
 - [System Operations](#system-operations)
@@ -129,6 +130,67 @@ Plugins are self-contained packages that extend JunctionBox with entirely new ca
 ![Plugins](images/plugins.png)
 
 ![Comic Studio plugin](images/comic-studio.png)
+
+## Smart TV Launcher: your Roku and Google TV home screen
+
+The **Smart TV Launcher** plugin gives your Roku and Google TV sets a custom home screen, with your streaming apps, the weather and a row of JunctionBox controls, plus a narrated Morning Briefing every day. These pictures are the real launcher on a TV, showing made-up demo data. [`SMART_TV_LAUNCHER.md`](SMART_TV_LAUNCHER.md) has every step and key; [`USER_GUIDE.md`](USER_GUIDE.md) has the everyday how-to.
+
+**Where it runs.** JunctionBox runs on Linux, macOS and Windows (and can manage Windows, Linux and macOS machines as boxes). The Smart TV Launcher's bridge runs on that same computer, and the launcher itself runs on Roku TVs and boxes and on Google TV / Android TV sets.
+
+The home screen: your apps as tiles, the weather and the time. The Morning Briefing has no tile; it plays by itself the first time each TV is turned on each day, and afterwards opens from the "Good morning" heading at the top (press **Up**, then **OK**).
+
+![The home screen](images/roku/home.jpg)
+
+The JunctionBox screen lists the plugins you have installed, a row of five at a time.
+
+![The JunctionBox screen](images/roku/junctionbox-plugins-2.jpg)
+
+Lights and air conditioning (Home Control), your Ring cameras, generated videos and photos:
+
+| | |
+|---|---|
+| ![Home Control](images/roku/home-control-quick-access.jpg) | ![Ring cameras](images/roku/ring-cameras.jpg) |
+| ![Video Studio](images/roku/video-studio-clips.jpg) | ![Photos](images/roku/photos-age-shift.jpg) |
+
+Books and Bibles, with a contents list, chapters and study guides, and Web Video, which plays a web page's video in the TV's own player:
+
+| | |
+|---|---|
+| ![Bible contents](images/roku/bible-contents.jpg) | ![Reading a Bible](images/roku/bible-reading.jpg) |
+| ![Web Video start page](images/roku/web-video-start.jpg) | ![Weather](images/roku/weather.jpg) |
+
+Coding-agent terminals (behind a PIN), a shell on any of your boxes, and your boxes' screens:
+
+| | |
+|---|---|
+| ![The PIN prompt](images/roku/terminal-pin.jpg) | ![Claude Code on the TV](images/roku/claude-answer.jpg) |
+| ![Box shells](images/roku/box-shells-list.jpg) | ![Screen Share](images/roku/screen-share-desktop.jpg) |
+
+**Opening it.** Press **Up** from the tiles to highlight the "Good morning" heading, then **OK** (**Right** moves on to the weather):
+
+![The heading highlighted: OK opens today's briefing](images/roku/briefing-heading-selected.jpg)
+
+![Right moves to the weather block](images/roku/weather-selected.jpg)
+
+**The briefing page** shows the day's picture, its length and parts, with **Play** and a start point for each part:
+
+![The Morning Briefing page](images/roku/briefing-menu.jpg)
+
+![Start at any part, then Sources and notes, Earlier briefings and Make a fresh one now](images/roku/briefing-menu-parts.jpg)
+
+| | |
+|---|---|
+| ![Sources and notes](images/roku/briefing-sources.jpg) | ![Earlier briefings](images/roku/briefing-history.jpg) |
+
+**What the video looks like** (frames from a made-up demo briefing; the TV's screenshot tool can't capture video, so these come from the video file itself): the title, then weather, your day, the news, scripture, markets and the sources.
+
+| | |
+|---|---|
+| ![Title](images/roku/briefing-video-title.jpg) | ![Weather](images/roku/briefing-video-weather.jpg) |
+| ![Your day](images/roku/briefing-video-your-day.jpg) | ![The news](images/roku/briefing-video-the-news.jpg) |
+| ![Scripture](images/roku/briefing-video-scripture.jpg) | ![Markets](images/roku/briefing-video-markets.jpg) |
+
+The plugin's own page in JunctionBox (a sidebar entry) has numbered cards: TV preparation, the bridge, your TVs, home-screen content, Bibles, terminals and agents, JB Settings and away access, and cards 8 to 15 for the Morning Briefing (schedule, contents, news, scripture, calendar, markets, voice and pictures, and which TVs play it). There is no screenshot of the plugin's own page yet.
 
 ## Boxes: remote machines and terminals
 

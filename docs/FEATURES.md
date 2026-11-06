@@ -1,6 +1,6 @@
 # JunctionBox — Features
 
-JunctionBox is a local-first AI agent orchestration platform. Your conversations, credentials, and run history live in a database on your own machine — not in a vendor's cloud. It runs multiple AI agents across any mix of providers, lets them delegate work to each other, remembers what matters across conversations, automates recurring work, and gives you real operational visibility into everything it's doing — with security defaults built for agents that can take real, consequential actions on your behalf.
+JunctionBox is a local-first AI agent orchestration platform. Your conversations, credentials, and run history live in a database on your own machine — not in a vendor's cloud. It runs multiple AI agents across any mix of providers, lets them delegate work to each other, remembers what matters across conversations, automates recurring work, and gives you real operational visibility into everything it's doing — with security defaults built for agents that can take real, consequential actions on your behalf. It runs natively on Linux, macOS and Windows.
 
 ## Model providers — bring your own, mix freely
 
@@ -10,7 +10,7 @@ JunctionBox doesn't lock you into one vendor or one way of paying for inference.
 - **Local or remote Ollama** — run open-weight models on your own hardware, or point at an Ollama server elsewhere on your network. Ollama agents get the same delegation and tool-use capabilities as cloud agents.
 - **Cloud APIs** — Anthropic, OpenAI, and xAI (Grok 4.5), using your own API keys, with credentials tested live before you save them.
 
-Every CLI agent runs through its native permission system *and* an OS-level sandbox on top of it (see Security, below) — the CLI's own guardrails are never the only thing standing between an agent and your filesystem.
+On Linux and macOS, every CLI agent runs through its native permission system *and* an OS-level sandbox on top of it (see Security, below; on Windows, which has no equivalent, agents run with your account's rights and this is stated plainly in Settings) — the CLI's own guardrails are never the only thing standing between an agent and your filesystem.
 
 ## Agents — precise control over what each one can do
 
@@ -81,12 +81,23 @@ This is where JunctionBox goes well beyond a single chat window:
 - Two distinct ways to use a registered machine: give an agent its connection details so it can decide to SSH there itself, or actually **run the agent's own process on that machine** — its filesystem and shell tools then genuinely operate there, not through a mounted view. On a Windows box this launches via PowerShell instead of a POSIX shell automatically — no separate setup.
 - A **Passthrough mode** for remote execution strips out everything JunctionBox-specific (safety baseline, delegation wiring, memory injection) so a remote agent runs with nothing but its own prompt and the CLI's native tools — useful when you want zero footprint beyond the agent itself.
 - Full interactive terminal access to any registered machine, local or remote, directly inside a chat tab.
-- **Screen sharing** with full mouse/keyboard control of any registered machine — including the machine JunctionBox itself runs on — in its own tab right alongside the terminal. Nothing to set up by hand on any platform: on Linux a VNC server is set up fresh for each session and torn down completely when you close the tab; on macOS it's the OS's own built-in Screen Sharing, switched on only for the session and off again afterward; on Windows a VNC server (TightVNC) is installed automatically the first time you screen-share into a given box, then run only for the life of each session after that — see the User Guide. Works from a phone or tablet browser too, with a tap-to-type on-screen keyboard button since there's no physical keyboard to use.
+- **Screen sharing** with full mouse/keyboard control of any registered machine — including the machine JunctionBox itself runs on (Linux and macOS; a Windows PC is added as a box over SSH) — in its own tab right alongside the terminal. Nothing to set up by hand on any platform: on Linux a VNC server is set up fresh for each session and torn down completely when you close the tab; on macOS it's the OS's own built-in Screen Sharing, switched on only for the session and off again afterward; on Windows a VNC server (TightVNC) is installed automatically the first time you screen-share into a given box, then run only for the life of each session after that — see the User Guide. Works from a phone or tablet browser too, with a tap-to-type on-screen keyboard button since there's no physical keyboard to use.
+
+## Your TVs: Smart TV Launcher and the Morning Briefing
+
+- **Where it runs:** JunctionBox runs on Linux, macOS and Windows (and manages Windows, Linux and macOS machines as boxes); the Smart TV Launcher's bridge runs on that same computer, and the launcher runs on Roku and Google TV / Android TV.
+- A **custom home screen for Roku and Google TV / Android TV** sets, installed from JunctionBox with no channel store: big tiles for your streaming apps, the weather, a quote line, and a JunctionBox screen with your lights and air conditioning, Ring cameras, generated videos and photos, books and Bibles, recipes, and box status. A small bridge on your computer serves it and sends the TV back to the launcher when you leave an app. Nothing leaves your home network except the weather lookup.
+- **Seven public-domain Bibles** (including an Ethiopian Bible in English and an Amharic Bible) built into PDFs, with contents, chapter lists and study guides, plus your Comic Studio and Book Studio books, each remembering its page.
+- **Web Video** browses any site from the TV remote and hands the page's video to the TV's own player; saved links come from the Watch List plugin.
+- **Coding-agent terminals, shells and agent chat from the couch**: Claude Code, Codex and Grok running on your computer, a shell on any registered box, JunctionBox agent chat with the same permissions as the web app (approvals and pop-ups included), and **screen sharing** of any box driven with the remote. All behind a PIN with lockout and idle sign-out.
+- **JB Settings and away access** on the TV (GPU services, machine credentials, system health) and an optional away address, through Tailscale Funnel, that exposes only the launcher bridge.
+- **Movie Maker** (from Video Studio) can be directed from the TV: describe a movie, approve the storyboard, review each take, narrate and export.
+- **Morning Briefing**: a narrated program of about 10 minutes (3 to 20) made every morning on your own computer from your location's weather, your calendar, the news (you choose the topics and what matters most), a scripture reading and the markets. A local voice (Kokoro, no graphics card), starter background clips included, scheduled with automatic retries, and played by itself the first time each TV is turned on each day, then reopened from the home screen's "Good morning" heading. Free, with no payment gating; every household gets its own data and settings.
 
 ## Security and privacy by design
 
 - **Local-first**: your agent conversations, credentials, and run history are stored in a local database on your own machine, not transmitted anywhere by default.
-- Every local CLI agent runs inside an OS-level sandbox on top of its own native permission system — a compromised or misled agent is contained by the operating system, not just asked nicely.
+- On Linux and macOS, every local CLI agent runs inside an OS-level sandbox on top of its own native permission system (Windows has none, and says so) — a compromised or misled agent is contained by the operating system, not just asked nicely.
 - **System Operations**: an agent can be granted time-boxed "privileged mode" to *propose* a system-level script (installing software, etc.), but nothing ever executes from the proposal itself — a human reviews the literal script text and explicitly approves or denies it before anything runs.
 - **Agent Swap Groups** let a specifically authorized agent trigger a GPU/resource handoff mid-conversation — authorization is fail-closed: an agent can trigger nothing until a human has explicitly granted it access to that specific resource.
 - Password-protected access with secure session cookies, CSRF protection, automatic lockout after repeated failed logins, and a complete audit log of every change made through the system.

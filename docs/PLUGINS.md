@@ -78,6 +78,8 @@ A deterministic (no AI) book-writing and publishing tool — the book is exactly
 
 Text-to-video generation: a fast tier with no identity support, and a slower, higher-quality tier. Identity-preserving generation trains a dedicated likeness from your own uploaded reference photos. Movies stitch several shots into one clip.
 
+**Movie Maker** (a tab in Video Studio) makes a whole movie from many short shots, because the video engine makes about five seconds at a time. Describe the movie and one of your own agents plans a storyboard (scenes, shots, narration) for you to edit and approve; each shot is made through the same queue as Quick Generate as a *take* you can watch, approve, reject or redo; narration is read by a voice that runs on your own computer, timed to the pictures, with subtitles; your own clips, pictures and music can be added; and the finished movie is assembled with ffmpeg, checked, and exported as an MP4 that plays on your Roku and Google TV. A shot can continue from the last picture of the one before it. The Smart TV Launcher's Video Studio screen has a Movie Maker section to review shots and export from the couch (PIN required for anything that starts work).
+
 ## Print Studio
 
 Generates 3D-printable meshes two ways: an exact parametric path (boxes, tubes, brackets — watertight by construction) and an AI path that turns a photo or text prompt into a mesh, with automatic repair for the cases where the raw result isn't watertight.

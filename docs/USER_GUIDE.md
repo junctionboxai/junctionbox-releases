@@ -20,19 +20,32 @@ JunctionBox is single-user software (one password, no roles) — there's no sepa
 - [MCP tools and plugins](#mcp-tools-and-plugins)
 - [Machines ("Boxes") and terminals](#machines-boxes-and-terminals)
 - [Screen sharing](#screen-sharing)
+- [Smart TV Launcher: your TVs (Roku, Google TV and Fire TV)](#smart-tv-launcher-your-tvs-roku-google-tv-and-fire-tv)
 - [Licensing: Free vs. Pro](#licensing-free-vs-pro)
 - [Administration](#administration)
 - [Troubleshooting](#troubleshooting)
 
 ## Getting started
 
-1. Install JunctionBox per `deploy/README-release.md`, then open `http://127.0.0.1:8000` **on that machine**.
+1. Install JunctionBox per `deploy/README-release.md` (Linux and macOS: `install-services.sh`; Windows: `install-services.ps1`, see *JunctionBox on Windows* below), then open `http://127.0.0.1:8000` **on that machine**.
 2. On first visit you'll set an access password (8+ characters) and accept the EULA — nothing else about JunctionBox works until it's done. This also works through the HTTPS proxy below, from any device on your LAN, so set a real password promptly after install.
 3. Log in with that password going forward. There's no "forgot password" flow — if you lose it, you'd need direct access to the machine to reset it (see Administration below).
 4. You'll land on the **Dashboard**: a summary of agents, providers, MCP tools, and recent activity, with a 3-step getting-started checklist until your first run exists.
 5. A **JunctionBox Support** agent is already there, auto-created — ask it how to use JunctionBox, or whether core services are running, at any time. It's protected (can't be deleted or have its prompt edited) and never appears as a delegation target for your other agents.
 
 The next three sections — Providers, Agents, Chat — are the minimum to get a working agent talking to you.
+
+### JunctionBox on Windows
+
+JunctionBox runs natively on 64-bit Windows (built for Windows 10, 11 and Server 2019 or newer; tested on Windows Server 2022), with no WSL and no administrator rights. Everything in this guide works the same way, with these differences:
+
+- **Install and services.** `install-services.ps1` copies the programs to `%USERPROFILE%\.junctionbox` and registers per-user **Scheduled Tasks** (`JunctionBox-junctionbox-api`, `JunctionBox-junctionboxd`, and the optional HTTPS proxy and search). They start when you log in, are restarted if they stop, and run while you are logged in (the same arrangement as the macOS LaunchAgents; they don't run through a full log out). Logs are in `%USERPROFILE%\.junctionbox\logs`. Restart a service with `Stop-ScheduledTask` then `Start-ScheduledTask`, or from the Settings restart buttons.
+- **Windows Firewall.** The first time the HTTPS proxy needs the network, Windows asks whether to allow it: choose **Private networks**. (If the installer is run as an administrator it adds the rule itself, for private and domain networks only.) A network Windows has marked *Public* stays blocked.
+- **No agent sandbox.** On Linux and macOS, local agents (Claude Code, Codex, Grok and every agent's `run_command`) are confined by the operating system to the folders their permission profile allows. Windows has no equivalent, so there they run with your own Windows account's rights, and JunctionBox's private files in `%USERPROFILE%\.junctionbox` are not hidden from them. The permission profile still decides what each tool is told it may do. Settings shows this note next to the profile. Prefer agents that run on a remote box, or keep high-risk work on a Linux or macOS machine, if you need real confinement.
+- **Terminals.** The web terminal opens PowerShell (or the shell you have) through Windows' own console (ConPTY), and boxes still use your `ssh`, which Windows 10 and later include.
+- **Local commands.** `run_command` (Dev Tools) and System Ops scripts run in PowerShell. System Ops can't ask Windows for administrator rights (there is no `sudo`), so a privileged step on this PC itself reports that it needs them.
+- **Not available on the Windows computer itself:** screen sharing of that PC (add it as a box over SSH with Windows' OpenSSH Server, like any other Windows box), starting and stopping Tailscale's background service and restarting Ollama from JunctionBox (use their tray icons), and the browser-fallback plugin.
+- **Optional tools** the usual way: `winget install Gyan.FFmpeg` (ffmpeg), `winget install oschwartz10612.Poppler` (PDF pages for the TV launcher). Private search (SearXNG) needs Python 3.10 or newer; the installer adds a per-user Python 3.12 if there isn't one.
 
 ## Core concepts
 
@@ -118,6 +131,7 @@ Connect one or more Telegram bots (via @BotFather tokens) to talk to a specific 
 
 - **MCP** (sidebar) manages Model Context Protocol tool servers — browse a built-in catalog or the public MCP Registry, install one, and any Anthropic/Ollama/Claude-CLI agent can use it.
 - **Settings → Plugins** installs self-contained plugin ZIPs (a separate distribution from JunctionBox core — see `FUNCTIONALITY.md`'s Plugin architecture section for what one actually is and the trust model involved). Installing a plugin's backend code requires a restart before its routes are live.
+- **Smart TV Launcher** is a plugin with its own section below.
 - **A plugin runs with the same privileges as JunctionBox itself.** There's no sandbox between a plugin and your data — install one only from a source you trust, the same judgment call as installing a browser extension.
 
 ## Machines ("Boxes") and terminals
@@ -155,6 +169,73 @@ A few things worth knowing:
 - On a **phone or tablet**, there's no physical keyboard to type with — a keyboard icon in the screen-share tab opens a tap-to-type input.
 - The **first** time you screen-share into a given Mac, macOS requires the Screen Recording permission to have been granted at least once *interactively, at that Mac itself* (System Settings → Privacy & Security → Screen Recording) — this can't be done remotely or via SSH by design (Apple's own hardening, so SSH access alone can never silently turn on remote screen viewing). If a session connects but shows a black screen, this is almost always why — go grant it once at the machine and it's a one-time fix per Mac.
 - Screen sharing to the local box requires either passwordless `sudo` or a stored sudo password on that Box's own connection record (Boxes → Local → Edit) — without one of those, starting a local session will tell you so directly.
+
+## Smart TV Launcher: your TVs (Roku, Google TV and Fire TV)
+
+Smart TV Launcher is a plugin that puts your own home screen on your Roku TVs and boxes and on Google TV / Android TV sets: big tiles for your streaming apps, the weather, a quote, and a **JunctionBox** screen with your lights, cameras, videos, photos, books, coding-agent terminals and more. It also makes a short narrated **Morning Briefing** each day. This section is the everyday how-to; the complete reference (every card, every key, every troubleshooting message) is [`SMART_TV_LAUNCHER.md`](SMART_TV_LAUNCHER.md), and [`VISUAL_GUIDE.md`](VISUAL_GUIDE.md) has pictures of the real screens.
+
+**Where it runs.** JunctionBox runs on Linux, macOS and Windows (and can manage Windows, Linux and macOS machines as boxes). The Smart TV Launcher's bridge runs on that same computer, and the launcher itself runs on Roku TVs and boxes, on Google TV / Android TV sets, and on Fire TV (Fire OS 7 or newer; built but not yet run on a real Fire TV).
+
+It has two parts. The **TV app** is installed on each TV (sideloaded on a Roku in developer mode, or a small Android app on a Google TV); nothing goes through Roku's channel store. The **bridge** is a small background program on the computer that runs JunctionBox: the TV asks it for weather, pictures and your data, and it sends the TV back to the launcher when you leave an app. Nothing leaves your home network except the weather lookup.
+
+### Setting it up
+
+1. **Get each TV ready (once per TV).** Roku: turn on developer mode with **Home x3, Up x2, Right, Left, Right, Left, Right**, note the IP address, choose *Enable installer and restart*, and pick a webserver password. Google TV: press **Build** seven times in *Settings, System, About*, then turn on *USB debugging* and *Wireless debugging*, and open *Pair device with pairing code*. Give every TV, and the JunctionBox computer, a fixed address (a DHCP reservation in your router).
+2. **Install the plugin.** *Settings, Plugins, Browse for plugin ZIP*, choose `smart-tv-launcher.zip`, and restart JunctionBox when asked. **Smart TV Launcher** appears in the sidebar.
+3. **Open the plugin page** and work down its numbered cards:
+   - **Card 2, the bridge:** press **Set up the bridge**. It builds its own private Python environment and registers a login service. When it says **Running**, add any optional parts you want (Ring live view, Web Video, ffmpeg, pdftoppm).
+   - **Card 3, your TVs:** **Find Rokus on my network** (or type the address) with the developer password, or **Pair and add** for a Google TV. Then press **Install** on each TV, or **Install or update on all TVs**. The launcher opens on the TV right away.
+   - **Card 4, the home screen:** your weather town, which apps get tiles (picked from the TV's own installed apps), and the quote line.
+   - **Card 5, Bibles:** seven public-domain Bibles to build into PDFs for reading on the TV.
+   - **Card 6, terminals, agents and screen share:** set the PIN that guards them (below).
+   - **Card 7, JB Settings and away access.**
+   - **Cards 8 to 15, the Morning Briefing** (below).
+4. On a Google TV you can press **Make it the Home screen** so the Home button opens the launcher; **Restore Google Home** undoes it. A Fire TV can't have a Home screen of its own (Amazon doesn't allow it): turn on *Settings, My Fire TV, Developer options, ADB debugging*, add it with **Connect and add** (accept the prompt on the TV with *Always allow*), press **Install**, and the launcher then comes back by itself whenever Amazon's home screen shows. Google TVs and Fire TVs can also be switched on and off in **Home Control**.
+
+### Using the launcher on the TV
+
+- **Home:** the top row are your apps, then **Media Player** (play a video or audio address), **Web Video**, **JunctionBox** (a row of hub tiles, five at a time on a Roku) and **Settings**. Leaving an app with Back or Home returns to the launcher; to really leave, use *Settings, Exit launcher*.
+- **Hub tiles**, depending on the plugins you have: **Home Control** (lights, groups, colours, air conditioning, TV remote), **Ring Security** (snapshots, live view with audio), **Video Studio** (your generated videos, remembering where you stopped; **Movie Maker** can plan, review and export a whole movie from the couch), **Photos** (Stickers, Age Shift, Storyboard, Time Machine; hidden groups never appear and password-protected groups show as locked), **Books** (Comic Studio and Book Studio PDFs and your Bibles, each remembering its page, with a contents and chapter list and study guides, and an optional **Read aloud** that reads a Bible or Book Studio book to you, turning the pages as it goes: press Options (`*`) on Roku or OK on Google TV, never on unless you choose it; add your own EPUBs and PDFs, or free Project Gutenberg books, from the plugin page and they appear under **My books**), **Recipes**, **Box Status**. Favourite teams get their own tiles with the next game and a full schedule (set up on the plugin page, card 9), and TV reminders (card 10) turn the TV on and tell you what you asked to be reminded about, aloud, until you press Done.
+- **Web Video:** browse a website with the remote; when a page has a video a green **VIDEO FOUND** badge appears and **Play** hands it to the TV's own player. YouTube links open in the Roku's YouTube app. Videos you save in the **Watch List** plugin appear on its start page.
+- **Terminals, Box Shells, Screen Share and Agents** are powerful, so they stay off until you set a **PIN** (4 to 12 digits) on card 6. The TV asks for it each time, five wrong tries lock it for five minutes, and a session signs out after 15 idle minutes.
+  - **Claude, Codex, Grok:** a terminal for that coding agent running on the JunctionBox computer. Card 6 lets you pick how much each may do without asking. Sessions keep running when you leave the screen.
+  - **Box Shells:** a shell on any box JunctionBox knows, using the credentials JunctionBox already holds; nothing is stored on the TV.
+  - **Screen Share:** a box's screen on the TV, driven with the remote's pointer; it needs the Web Video part.
+  - **Agents:** chat with your JunctionBox agents, with the same permissions, sandbox and history as in the web app. Tool approvals and questions appear on the TV, and pop-ups go only to the TV that started the chat.
+- **JB Settings** (PIN) shows GPU services, machine credentials (write-only), system health and **Away access**, which publishes only the launcher bridge through Tailscale Funnel so a TV on another network can still use it.
+
+### The Morning Briefing
+
+A narrated program, about 10 minutes by default (3 to 20 allowed), made fresh every morning on the JunctionBox computer from **your** weather, calendar, news, a scripture reading and the markets. It needs no graphics card, has no payment gating, and nothing is made until you turn it on.
+
+**Turn it on and set it up (cards 8 to 15):**
+
+- **Card 8:** the master switch, the time to start making it (it takes up to about half an hour, so set it well before you wake), how many times to retry if a run fails, the length, and how many days to keep. **Make today's now** builds one immediately, **Stop** cancels, and **Read today's script** shows exactly what will be said. A computer that was off at the set time catches up when it starts.
+- **Card 9, what is in it:** weather and alerts, your calendar, the news, scripture and markets, each on or off, in your order, with a share of the time. A part with nothing to say is skipped, and a severe weather alert moves to the front.
+- **Card 10, the news:** topics to search for (several phrases can be joined with **|**, with an optional story limit), subjects to leave out, and **What matters most**, a short instruction about what to cover first (for example your own state's election results ahead of everything else). A JunctionBox agent you choose writes short summaries; without one the headlines are read as published. If the local search is throttled it falls back to Google News. Outlets are named at the end.
+- **Card 11, scripture:** a Psalm and a Proverb by the day of the month, a book read a little each day, one passage you choose, or daily readings from a table you supply. It reads at whole verses and announces the reference the way a person would ("Proverbs chapter 4, verses 1 through 5").
+- **Card 12, your calendar:** add each Google Calendar with its **secret address in iCal format**. The address is stored on this computer in an owner-only file, never shown again, and calendars appear by name; private events are read as "Private event". **Test the calendars** reads each once.
+- **Card 13, markets:** index and commodity figures from a best-effort public feed (or a free Finnhub key) and Treasury yields from the US Treasury, each with its date. It never gives advice.
+- **Card 14, voice and pictures:** the narrator is Kokoro, running on the processor. Press **Install the voice** once (a download) and pick the voice and speed; without it a plainer fallback voice or silent captions are used. Backgrounds are slow loops of the starter clips that come with the plugin, or your own, including clips made in Video Studio. **ffmpeg** must be installed on the computer.
+- **Card 15, on the TVs:** whether TVs play it by themselves, which ones are left out, and the hour after which they don't.
+
+**Watching it:**
+
+- The first time each TV is turned on each day (before the cut-off hour, and within 15 minutes of turning on), a Roku starts the briefing by itself, straight into the program rather than a menu. A Google TV starts it the first time its home screen shows that day. **Back** skips it. Each TV does this once a day.
+- To watch it again, use the **Good morning, Wednesday, Nov 4** heading at the top of the home screen. On a Roku press **Up** from the tiles, then **OK** (**Right** moves to the weather, **Down** or **Back** returns to the tiles). On a Google TV it is the banner at the top. It has no tile of its own.
+- The briefing page shows the day's picture, its length and its parts. **OK** plays, or start at any part. While it plays: **OK** pauses, **Left / Right** go back and forward 10 seconds, **Up / Down** jump parts, **Back** skips. **Sources and notes** lists where everything came from and anything left out, **Earlier briefings** shows the last week, and **Make a fresh one now** rebuilds today's.
+
+Nothing is installed on the TVs each morning: the video is made on the computer and streamed to the TV from it. The computer and the bridge must be on when the TV is turned on.
+
+### Updating, removing and fixing
+
+- **Update:** install a newer `smart-tv-launcher.zip`, restart JunctionBox, then press **Update the bridge** (if offered) and **Update** on each TV.
+- **Remove a TV:** **Remove** on its row; you're asked whether to delete the app from the TV too. To remove everything, remove the TVs, press **Stop** on the bridge, delete the plugin, and delete `~/.roku-launcher`.
+- **Common problems:** "Can't reach a Roku" means it is in standby, on another (guest) network, or the address changed. "Developer mode is off" means repeat the Roku key sequence (a factory reset clears it). A Google TV pairing code expires in a minute or two: open *Pair device with pairing code* again. The TV app can't reach the bridge when the computer has several network connections: set the address in card 4's *Advanced* and press **Install** again. A terminal that says "The terminal is off" needs a PIN on card 6. No briefing video on a TV means the briefing isn't ready yet (check card 8) or the TV is excluded in card 15. The bridge's log is `~/.roku-launcher/bridge.log` (**Show log** on the page). See `SMART_TV_LAUNCHER.md` for the full table.
+
+### Privacy and safety
+
+The bridge listens on your home network only and every request needs a private token; media links are signed and short-lived. The Roku developer password is stored encrypted and used only to install on your own TVs. Calendar addresses and market keys are credentials kept in owner-only files and never shown again. Terminals, shells, Screen Share and Agents can act on your computer, so use them only on a network you trust: anyone who knows the PIN and can reach the bridge gets the access you have at that computer.
 
 ## Licensing: Free vs. Pro
 

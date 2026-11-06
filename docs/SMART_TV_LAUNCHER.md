@@ -1,6 +1,8 @@
-# Smart TV Launcher: your own home screen on your Roku and Google TVs
+# Smart TV Launcher: your own home screen on your Roku, Google TV and Fire TV sets
 
-Smart TV Launcher puts a custom home screen on your Roku TVs and boxes, and on Google TV and Android TV sets. It shows your streaming apps as big tiles, the weather, and a row of JunctionBox controls: your lights and air conditioning, your Ring cameras, your generated videos and photos, your books and Bibles, and terminals for the Claude, Codex and Grok coding agents on your computer, plus shells on your JunctionBox boxes and screen sharing of them. When you leave an app, the TV comes back to it by itself.
+Smart TV Launcher puts a custom home screen on your Roku TVs and boxes, and on Google TV, Android TV and Fire TV sets. It shows your streaming apps as big tiles, the weather, and a row of JunctionBox controls: your lights and air conditioning, your Ring cameras, your generated videos and photos, your books and Bibles, and terminals for the Claude, Codex and Grok coding agents on your computer, plus shells on your JunctionBox boxes and screen sharing of them. When you leave an app, the TV comes back to it by itself.
+
+**Where it runs.** JunctionBox runs on Linux, macOS and Windows (and can manage Windows, Linux and macOS machines as boxes). The Smart TV Launcher's bridge runs on that same computer, and the launcher itself runs on Roku TVs and boxes, on Google TV / Android TV sets, and on Fire TV (Fire OS 7 or newer). Fire TV support is built and tested against a stand-in for the device but has not yet been run on a real Fire TV.
 
 It has two parts, and the **Smart TV Launcher plugin** sets up both:
 
@@ -26,15 +28,15 @@ These pictures are of the real launcher on a TV, showing made-up demo data (no r
 
 ## What you need
 
-- JunctionBox running on a computer that stays on (Linux or macOS). The bridge runs on the same computer, as your own user, and must be on whenever you want the launcher to work.
+- JunctionBox running on a computer that stays on (Linux, macOS or Windows). The bridge runs on the same computer, as your own user, and must be on whenever you want the launcher to work.
 - One or more Roku TVs or boxes, and/or Google TV or Android TV sets, on the same home network as that computer.
-- Python 3.9 or newer with the `venv` module on that computer. Ubuntu and Debian: `sudo apt install python3 python3-venv`. macOS: `brew install python`.
+- Python 3.9 or newer with the `venv` module on that computer. Ubuntu and Debian: `sudo apt install python3 python3-venv`. macOS: `brew install python`. Windows: nothing to do first. If there is no Python 3.9 or newer, the bridge set-up downloads and installs a per-user Python 3.12 for you (no administrator rights).
 - Optional, for specific features:
-  - **ffmpeg**, for Ring live view and the Web Video fallback player.
-  - **poppler** (`pdftoppm`), for reading Book Studio and Comic Studio PDFs and Bibles on the TV.
+  - **ffmpeg**, for Ring live view, the Web Video fallback player and the Morning Briefing. Windows: `winget install Gyan.FFmpeg`.
+  - **poppler** (`pdftoppm`), for reading Book Studio and Comic Studio PDFs and Bibles on the TV. Windows: `winget install oschwartz10612.Poppler`.
   - **Claude Code** (`claude`), **Codex** (`codex`) and/or **Grok** (`grok`), signed in on the computer, for the terminal tiles. Only the ones you have get a working tile.
   - **Google Chrome**, for Web Video (Roku only). Without it the plugin downloads a browser for you.
-  - **adb** (Android's debugging tool), for Google TVs only. The plugin downloads Google's copy for you (about 12 MB) if you don't have it.
+  - **adb** (Android's debugging tool), for Google TVs and Fire TVs only. The plugin downloads Google's copy for you (about 12 MB) if you don't have it.
 
 ## Step 1: Get each TV ready
 
@@ -64,6 +66,14 @@ If the key sequence does nothing, check that the Roku is on its Home screen (not
 
 Pairing lets this computer install and open apps on the TV. You can take that permission back under Developer options, **Revoke wireless debugging authorizations**.
 
+### Fire TV: turn on ADB debugging
+
+1. Open **Settings, My Fire TV, About** and press **OK** on the device name seven times, until it says you are a developer.
+2. Go back to **My Fire TV** and open **Developer options**. Turn on **ADB debugging** and **Install unknown apps** (on newer software the second switch is under each app).
+3. Note the TV's address under **Settings, My Fire TV, About, Network**. You'll type it into JunctionBox in step 3.
+
+There is no pairing code. The first time this computer connects, the TV asks **Allow USB debugging?**; tick **Always allow from this computer** and choose **OK**. Take the permission back under Developer options, **Revoke USB debugging authorizations**. Needs Fire OS 7 or newer: Fire TV Stick 4K and newer, Fire TV Stick Lite, Fire TV Cube (2nd generation and newer) and Fire TV sets. Older Fire OS 5 and 6 devices are too old for the launcher app.
+
 ### Give each TV a fixed address
 
 The launcher finds each TV by its IP address, so it must not change. In your router's settings, find "DHCP reservation", "address reservation" or "static lease", pick each TV from the list of connected devices, and reserve its current address. Do the same for the computer that runs JunctionBox, because the TV apps are built with that computer's address. If a TV or the computer ever changes address, update it in the plugin and press **Install** again on each TV.
@@ -89,7 +99,7 @@ Press **Set up the bridge**. The plugin does everything for you and shows its pr
 1. copies the bridge program to `~/.roku-launcher/runtime`,
 2. builds a private Python environment for it (it never touches your system Python),
 3. installs the libraries it needs (Pillow for pictures, pyte for the terminal screens),
-4. registers it as a background service that starts when you log in (systemd on Linux, launchd on macOS), and starts it.
+4. registers it as a background service that starts when you log in (systemd on Linux, launchd on macOS, a per-user Scheduled Task on Windows), and starts it.
 
 When the page shows **Running**, the bridge is up. It lists **optional parts**:
 
@@ -97,8 +107,8 @@ When the page shows **Running**, the bridge is up. It lists **optional parts**:
 |---|---|---|
 | Ring live view | Live video and audio from your Ring cameras on the TV | Large download. Needs ffmpeg. |
 | Web Video (Roku) | A browser on your computer that you steer from the TV remote, with the video handed to the TV's own player | Needs Google Chrome or a downloaded browser. |
-| ffmpeg | Re-streaming video | Install with your package manager. |
-| pdftoppm | Reading Book Studio and Comic Studio PDFs | Install `poppler`. |
+| ffmpeg | Re-streaming video | Install with your package manager (Windows: `winget install Gyan.FFmpeg`). |
+| pdftoppm | Reading Book Studio and Comic Studio PDFs | Install `poppler` (Windows: `winget install oschwartz10612.Poppler`). |
 
 Install the ones you want. You can add them later. Anything missing is simply unavailable on the TV; the rest keeps working.
 
@@ -110,11 +120,17 @@ One list holds every TV, with a badge for its kind.
 
 **To add a Google TV:** choose **Google TV / Android TV** in **Add a TV**. If adb isn't ready, press **Get adb**. Enter the TV's address and a name, then the **pairing port and code** from the TV, and press **Pair and add**. Pairing happens once. After that the plugin finds the TV's debugging port by itself, even though that port changes every time the TV restarts its debugging. If this computer is already paired with the TV, leave the pairing boxes empty.
 
+**To add a Fire TV:** choose **Fire TV** in **Add a TV**, enter its address and a name, and press **Connect and add**. If the TV asks to allow this computer, accept it with **Always allow** and press the button again. The plugin checks that the device really is an Amazon Fire TV.
+
 **Install:** press **Install** on a TV's row. The launcher is built for your installation (your computer's address and a private key are put into it) and sent to the TV, which opens it right away. **Install or update on all TVs** does every TV at once. After a JunctionBox update brings a newer launcher, each row shows **Update available**; press **Update**.
 
 The key is a random token created on your computer, stored only in `~/.roku-launcher/token` (readable only by you) and inside the app on your TVs. The bridge ignores requests without it.
 
 **Google TV: make it the Home screen.** When you like how the launcher looks on a Google TV, press **Make it the Home screen** on its row, so the Home button opens it. **Restore Google Home** puts things back at any time, and removing the TV can also delete the app and restore Google's Home screen. The plugin checks that the TV accepted the change. Some Android 14 Google TVs accept the setting but keep sending the Home button to Google's own home app; for those the plugin also switches Google's home app off (`pm disable-user`), which makes the Home button open the launcher, and **Restore Google Home** switches it back on. While it is off, the launcher's *Go to the Google TV home screen* does nothing, so use **Restore Google Home** first. If a TV refuses both, the launcher still works as an app you open from the app row.
+
+**Fire TV: how the launcher stays in front.** Amazon doesn't let any app become a Fire TV's Home screen, so there is no Home-screen button for a Fire TV. Instead the bridge watches it over adb (every two seconds, only while it is awake) and, when Amazon's home screen comes up, opens the launcher again, just as it does for a Roku. You see Amazon's screen for a second or two after pressing Home, then the launcher. To leave on purpose, use the launcher's **Settings**: *Go to the Fire TV home screen* and *Fire TV settings* tell the bridge to stand down for 10 minutes first. A TV that goes to sleep and wakes up starts being watched again. A Fire TV has its own app tiles (the same services use different package names there); on install the plugin makes the list from what the TV really has, and **Apps on Google TV and Fire TV tiles** in step 4 changes it. The bridge must be running and able to reach the TV for this to work. The launcher app is version 1.1.4.
+
+**Home Control.** Every Google TV and Fire TV you add is also registered in Home Control (when that plugin is installed) so you can switch it on and off there: off sends the sleep key over adb; on sends a Wake-on-LAN packet to the TV's Wi-Fi address (saved when the TV was added) and, if the TV is reachable, a wake key. A TV in deep sleep may not answer on the network; a Fire TV usually stays reachable, a Google TV depends on its "wake on Wi-Fi / Cast" setting. Removing the TV removes it from Home Control too.
 
 ### 4. Choose what the home screen shows
 
@@ -214,6 +230,14 @@ In the ask-first modes the agent's questions appear on the TV; answer with the q
 - **Pop-ups** for Agents appear in the top right on any screen once you have signed in to Agents on that TV, and only on the TV that started the chat. Screen Share and Agents share one PIN sign-in on the TV; leaving Screen Share signs out unless Agents pop-ups are on.
 - **Updating.** The pages update with the bridge. The Google TV app itself (version shown on the Google TVs card) only needs reinstalling when the plugin says an update is available; version 1.1.1 added the picture-in-picture support.
 
+**Movie Maker** (inside **Video Studio**) lets you direct a whole movie from the TV. On the Roku choose *Movie Maker* in the list on the left of Video Studio; on a Google TV press *Movie Maker: make a whole movie*. You need the separate **Video Studio** plugin with its Movie Maker tab.
+
+- **Your movies.** Each shows its state (planning, waiting for your approval, making shots, waiting for you to review them, ready to export) and how many shots are ready.
+- **New movie.** Describe it with the TV's keyboard and pick a length. One of your JunctionBox agents plans the storyboard, which then waits for your approval. Nothing is made until you approve.
+- **Storyboard, queue and review.** Look through the shots, see what the video engine is doing, and *Watch and review shots*: play each take, then approve it, reject it, make another take, or watch the next one (Left and Right switch takes on the Roku; on a Google TV, OK opens the same choices). A shot that was made from an earlier take of the shot before it is marked as out of date.
+- **Narration, export and play.** *Read the narration aloud* uses the voice you chose in the desktop page. *Export the movie* makes the finished MP4 (TV quality, a small file, or a quick preview) and *Play the finished movie* plays it. A movie is checked after it is made, and the check is shown.
+- **PIN.** Looking and playing need nothing; anything that starts work (a new movie, approve, make shots, pause, narrate, export, approve or reject a take) asks for the terminal PIN once, and you cannot delete a movie from a TV. Adding your own clips, pictures and music, trimming and transitions are done in the desktop page.
+
 Each agent and each box has its own session, so you can leave Codex working, have a shell open on two boxes, and open Claude. They keep running when you leave; close the app and come back to the same conversation. A tile whose command isn't installed says so when you open it. A box that is switched off or unreachable shows the ssh error on the screen. Card 6 shows which of the three were found.
 
 Because it is a shell on that computer, it is **off until you set a PIN** (4 to 12 digits) on this card:
@@ -221,7 +245,7 @@ Because it is a shell on that computer, it is **off until you set a PIN** (4 to 
 - The TV asks for the PIN each time you open the terminal. The bridge checks it (salted PBKDF2) and never stores it in the clear. Five wrong tries lock the terminal for five minutes.
 - A TV that stops using the terminal is signed out after 15 minutes.
 - **Turn off** removes the PIN and ends the session. **End running session** stops all running sessions without removing the PIN. One PIN covers all three agents.
-- It needs a Mac or Linux bridge, at least one of the three commands on the computer, and the small `pyte` package, which "Update the bridge" installs.
+- It needs at least one of the three commands on the computer and the small `pyte` package (and, on Windows, `pywinpty`, which gives the terminals a real console), which "Update the bridge" installs. On Windows the terminals and box shells run in PowerShell, and a command installed with npm (a `.cmd` file) is found and started for you.
 
 On the TV: the D-pad sends the arrow keys, OK sends Enter, and Play opens the TV's keyboard to type a line. On Google TV a USB or Bluetooth keyboard types straight into the agent. Press `*` (or Menu, or Back) for a list of quick keys: Esc, Tab, Shift+Tab, Ctrl+C, 1, 2, 3, y, n, page up/down through what the agent has printed, Restart, End session, and Leave. Rewind and Fast-forward also scroll back. Both TVs show the agent's colours; the bridge draws the Roku's screen as a picture.
 
@@ -243,11 +267,125 @@ The first time, Claude asks whether you trust the folder. (Codex and Grok go str
 
 Only open this on a network you trust: anyone who knows the PIN and can reach the bridge gets the same access you have at that computer.
 
+### 7. JunctionBox settings, and using the launcher away from home
+
+**JB Settings** is a tile on the TV's JunctionBox screen (Roku and Google TV). It asks for the terminal PIN once and then offers four pages, each a view of what the web Settings page already holds (the TV calls JunctionBox's own code, so the two can never disagree):
+
+- **GPU Services.** Each service, whether it is running, and what shares its GPU. *Activate* stops the others that share the GPU and then starts that one (the web page's button); *Start* and *Stop* do just that service. The bottom bar warns when two services are running on one GPU.
+- **Machine Credentials.** Every machine, and whether a sudo password is stored for it. You can set, replace or clear one. Passwords are write-only: they are saved encrypted, never shown, and never sent to the TV. Changing one works only from the home network (not through the away address below).
+- **System Health.** Real checks, each with what it measured: the server, the agent daemon, database integrity, the encryption key, disk space, backups, the agent command-line tools, every machine answering, and every GPU service reachable. The overall answer is green only when every check passes; a check that cannot run counts as failing.
+- **Away access.** Turns the away address on and off (below).
+
+**Away access (Tailscale).** A Roku cannot run Tailscale, so a TV at a tailgate (another network) can't see this computer. Turning *Away access* on (on the TV, or in card 7 of the plugin page) connects Tailscale on this computer if needed and publishes **only the launcher bridge** at `https://<this computer>.<your tailnet>.ts.net:10000` with Tailscale Funnel. JunctionBox itself, and anything else Funnel already serves on this computer, is not touched (port 10000 is used because Funnel only offers 443, 8443 and 10000, and the others are taken). The TVs learn the address while at home and keep it; when the home address stops answering they try it, check the home address again every 20 seconds (Google TV: every minute), and go back as soon as it answers. Everything over the away address still needs the TV's key, and the PIN where the home network needs it; the few pages that answer without a key at home (box names, the channel list) need the key from away. Remote requests can look at and start or stop GPU services and see health, but cannot change passwords. This computer has to stay on, awake and online. Other addresses (for example your own Tailscale address) can be added by hand. The Google TV app needs version 1.1.2 for this; Rokus need app 1.1.34.
+
+**Keeping Wireless debugging on (Google TV).** Android turns Wireless debugging off after a while and after every restart, which cuts the plugin off from the TV (pairing survives; the switch doesn't). When the app is installed, the plugin gives it a one-off right (`pm grant ... WRITE_SECURE_SETTINGS`, nothing else) to switch that one setting back on. The launcher checks when it opens and every two minutes, so after a restart it is on again as soon as the Home screen starts, and an off switch is put right within about two minutes. Turn it off by setting `gtv_keep_debugging` to 0 in the plugin's settings before installing, or revoke the right with `adb shell pm revoke com.junctionbox.launcher android.permission.WRITE_SECURE_SETTINGS`. App version 1.1.3.
+
+### 8. Morning Briefing
+
+A short narrated program, made fresh every morning on this computer from your own weather, calendar, the news, a scripture reading and the markets. It plays by itself the first time each TV is turned on that day. After that it is opened from the **Good morning, Tuesday, Nov 4** heading at the top of the home screen (on a Roku, press **Up** from the tiles and then **OK**; **Right** moves to the weather and **Left** back; on a Google TV it is the banner at the top). It has no tile of its own. It is part of the launcher, needs no graphics card, and nothing is made until you turn it on. It needs `ffmpeg` on this computer, and the narrator voice is a one-time download from the **Install the voice** button on card 14 (without it the briefing uses a plainer fallback voice, or silent captions). The starter background clips ship with the plugin. The setup page has these cards (8 to 15):
+
+| Card | What it does |
+|---|---|
+| 8. Turn it on and set when | The master switch, the time it starts being made (about half an hour of work, mostly the voice, so set it well before you wake), how many times to try again if a run fails (0 to 6, with a growing wait between tries; a run that stops making progress is detected and restarted, and a computer that was off at the set time catches up when it starts), the length (3 to 20 minutes), how many days to keep, **Make today's now**, **Stop**, and **Read today's script**. It shows how far a run is, what was left out and why. |
+| 9. What is in it | Weather and alerts, your calendar, the news, scripture, markets: each on or off, in your order, with a share of the time. A part with nothing to say that morning is skipped and its time goes to the others. A severe weather alert is moved to the front. |
+| 10. The news | Topics to search for, subjects to leave out, and whether an AI agent writes short summaries. A topic can hold several search phrases separated by **\|** (for example `Mississippi election results \| Senate results`) and an optional story **limit**, which is shared across its phrases. **What matters most** is a short instruction (up to 600 characters) saying what to cover first, such as your own state's results ahead of everything else. Stories come only from the search results, with the outlets named at the end; when the local search is throttled the briefing falls back to Google News. Long lists are summarised in batches, so one failure only leaves that batch as published headlines. State abbreviations are read as full names ("Mayhew, MS" is spoken as Mississippi). |
+| 11. Scripture | The reference is announced the way a person says it ("Proverbs chapter 4, verses 1 through 5"). Reads from the Bibles that ship with the launcher (public-domain texts), cut only at whole verses: a Psalm and a Proverb by the day of the month, a book read a little each day, one passage you choose, or daily readings from a table you supply (a wrong feast day read aloud is worse than none, so none is built in). |
+| 12. Your calendar | Add each Google Calendar with its **secret address in iCal format**. The address is kept on this computer in an owner-only file and is never shown again; calendars appear by name. Private events are read as "Private event". **Test the calendars** reads each once. |
+| 13. Markets | Index and commodity figures from a best-effort public feed (or a free Finnhub key you add), Treasury yields straight from the US Treasury. Every number is read with its date and whether it is a close. It never gives advice. |
+| 14. Voice and pictures | The narrator (Kokoro, on the processor), its speed, picture themes, and the clip library. Short clips are played as slow seamless loops; with no clips, soft moving backgrounds are used. Clips made in Video Studio can be added. |
+| 15. On the TVs | Whether TVs play it by themselves, which ones, and the hour after which they don't. |
+
+How it plays by itself: a Roku starts it directly, without stopping at the menu, when it is turned on, if today's briefing is ready, that TV hasn't played it today, and it is before the cut-off hour (it must be within 15 minutes of the TV being turned on). A Google TV starts it the first time its home screen shows each day. **Back** skips it and the launcher is underneath. Each TV does this once a day.
+
+**Opening it.** Press **Up** from the tiles to highlight the "Good morning" heading, then **OK** (**Right** moves on to the weather):
+
+![The heading highlighted: OK opens today's briefing](images/roku/briefing-heading-selected.jpg)
+
+![Right moves to the weather block](images/roku/weather-selected.jpg)
+
+**The briefing page** shows the day's picture, its length and parts, with **Play** and a start point for each part:
+
+![The Morning Briefing page](images/roku/briefing-menu.jpg)
+
+![Start at any part, then Sources and notes, Earlier briefings and Make a fresh one now](images/roku/briefing-menu-parts.jpg)
+
+| | |
+|---|---|
+| ![Sources and notes](images/roku/briefing-sources.jpg) | ![Earlier briefings](images/roku/briefing-history.jpg) |
+
+**What the video looks like** (frames from a made-up demo briefing; the TV's screenshot tool can't capture video, so these come from the video file itself): the title, then weather, your day, the news, scripture, markets and the sources.
+
+| | |
+|---|---|
+| ![Title](images/roku/briefing-video-title.jpg) | ![Weather](images/roku/briefing-video-weather.jpg) |
+| ![Your day](images/roku/briefing-video-your-day.jpg) | ![The news](images/roku/briefing-video-the-news.jpg) |
+| ![Scripture](images/roku/briefing-video-scripture.jpg) | ![Markets](images/roku/briefing-video-markets.jpg) |
+
+On the TV, the heading opens a page with the day's picture, its length and parts. **OK** plays, or start at any part. While it plays: **OK** pauses, **Left / Right** go back and forward 10 seconds, **Up / Down** jump to the next or previous part, **Back** skips. **Sources and notes** lists where everything came from and anything left out. **Earlier briefings** shows the last week. **Make a fresh one now** asks this computer to make it again. A very large news day can make the program longer than the length you set, since news is given most of the time.
+
+**What has been tested on a real TV.** The Roku app (menu, playback, auto-play on first turn-on, the heading shortcut) has been run on Roku TVs. The Google TV page has been checked in a browser only; playing the briefing on an actual Google TV has not been tried yet. The voice has been tuned by pace and checked by ear on a Roku only.
+
 ### How the two kinds differ
 
 - **Home screen.** On a Roku, the bridge watches the TV and sends it back to the launcher when you leave an app (auto-return). On a Google TV the launcher is the Home screen itself, so the Home button comes back to it.
 - **Screens.** The Roku launcher is a native Roku app. The Google TV launcher is a small Android app that shows pages served by the bridge, so those screens update without reinstalling anything. Both have the same screens: apps, weather, Home Control, Ring Security, Video Studio, Photos, Books, Box Status and Media Player, and the Watch List. **Web Video** (the remote-controlled browser) is Roku-only, because Google TVs already have real browsers. The newer tiles (**Recipes**, **Agents**, **Screen Share**) are on both; on a Google TV they are pages in `launcher/bridge/gtv/` (`recipes.js`, `agents.js`, `share.js`, with shared menus, text box and PIN pad in `ui.js`), so they update with the bridge.
 - **Building the Google TV app yourself.** The app's sources and a build script that needs only the Android command-line tools are in `launcher/android` (see For developers).
+
+
+## Game schedules (card 9)
+
+Pick a favourite team and its schedule stays up to date by itself.
+
+- **Add:** choose a sport (or leave it on any), type the school, city or team, press **Find**, press **Add**. The leagues are NFL, college football, UFL, NBA, WNBA, men's and women's college basketball, MLB, college baseball and softball, NHL, college hockey, MLS, NWSL, Premier League, La Liga, Bundesliga, Serie A, Ligue 1, Liga MX, Champions League and women's college volleyball. Schedules come from ESPN's public service (no account). Up to 24 teams.
+- **Tile:** each team gets a tile on the hub row of Roku and Google TV, just after Books, drawn by the bridge (logo, team colours, the sport, and "Saturday 3:15 PM vs Vanderbilt SEC Network", red **LIVE** with the score during a game). It opens the full schedule: every game with date, time and channel, results (W/L and score) for played ones, the next game selected.
+- **Briefing and calendar:** every game goes into the Morning Briefing on game day ("Mississippi State at Auburn on ESPN"); a game whose time isn't set yet is an all-day entry. The card also shows a private calendar address to subscribe to on a phone or in Google Calendar (all games, with results).
+- **Freshness:** the bridge re-reads each schedule every 3 hours, and every 10 minutes around game time (scores, delays, time changes).
+- **By agent:** `POST /teams/add` on the bridge (bridge token) with `{"team": "Mississippi State", "sport": "football"}` adds a team; if the name could be several teams it answers with `choices` and adds nothing. `GET /teams/manage` lists the teams, `POST /teams/remove {"key"}` removes one.
+
+## TV reminders (card 10)
+
+Tell the TV what to remind you about. At each chosen time the TV **turns itself on**, fills the screen with the reminder, **says it aloud** (the narration voice) and asks again every few minutes until someone presses **Done**.
+
+- **What:** a name, optional details, and optionally the event's own start time (used in the spoken text and in the briefing).
+- **How often:** once, every day, certain days of the week, **a certain weekday of the month** (for example *the first Wednesday*, or the last Friday), a date each month (day 31 means the month's last day), or a date each year.
+- **When:** any number of alerts, each "that day" or "N days before" at a time, with optional words ("Time to go to the"). The usual set is the day before in the evening, then that morning, mid-afternoon and early evening.
+- **Which TVs:** tick some, or none for every TV. **Turn the TV on if it's off**, **Say it out loud** and **Keep asking** (every 5 to 30 minutes, up to 4 more times) are per reminder.
+- **On the TV:** OK = Done; Down gives "Remind me in 15 minutes" and "In 1 hour"; Back hides it for now and it asks again. If the TV was showing another Roku app, Done returns to it.
+- **How it reaches a TV:** a Roku is turned on with its power key (PowerOn) and started with the reminder; a Google or Fire TV is woken over adb through the plugin, and its launcher page asks the bridge every 15 seconds. A reminder missed because the computer was off still goes off if it is less than 3 hours late; nothing is replayed after that.
+- **Briefing:** the day's reminders are calendar entries in the Morning Briefing.
+- **Test now** on each reminder sends it to its TVs at once.
+- **By agent:** `POST /reminders/add` on the bridge (bridge token) with the same fields as the page (`title`, `repeat`, `alerts`, optional `tvs`, `nag`, ...); `GET /reminders/manage` lists them.
+
+## Picking up an earlier Claude, Codex or Grok conversation from a TV
+
+In the Claude, Codex and Grok terminals, open the quick-key menu (`*` on Roku, Menu or `*` on Google TV) and choose **Resume an earlier conversation...**. The list shows the 30 most recent conversations of that tool on this computer (its own title, the folder it was in, how long ago). Pick one, confirm, and the TV terminal restarts on it with `claude --resume`, `codex resume` or `grok --resume`, in the folder the conversation was started in (the tools look conversations up by folder). It replaces what the TV terminal is running now, so a confirmation says so.
+
+- A Claude conversation that is still open in another terminal on the computer is marked "(open)". Resuming it makes a copy (`--fork-session`), so two programs never write into the same conversation. Close the other one first if you want to continue the original.
+- The list is read from the tools' own history folders (`~/.claude/projects`, `~/.codex/sessions`, `~/.grok/sessions`); nothing is copied or stored. The bridge only accepts an id that is in that list.
+- **Restart** still starts a fresh conversation.
+- Typing from the iOS Roku keyboard now holds up to 4000 characters (the Roku's text box used to stop at 15).
+
+## Your own books (card 8)
+
+Add ebooks of your own and they appear under **My books** in Books on every TV, with a saved place, dark mode, chapters and read-aloud (comics aside, everything the Bibles and Book Studio books can do).
+
+- **Ways in:** choose or drop files on the plugin page; drop files in the inbox folder (`~/.roku-launcher/mybooks/inbox`, checked every 30 seconds, and **Check the folder now**); or **Find a free book**, which searches Project Gutenberg and downloads the EPUB (only from gutenberg.org).
+- **Formats:** EPUB, PDF, Word (docx), text, web pages (html), RTF, ODT, FB2, and MOBI/AZW/AZW3 once **Add MOBI support** has been pressed (installs the `mobi` reader into the bridge's environment). Up to 400 MB each.
+- **How:** the plugin makes one PDF per book (`~/.roku-launcher/mybooks/<id>.pdf` plus `<id>.json` with title, author and chapter list): pandoc turns the book into a web page and headless Chrome prints it on a 6 x 9 inch page. PDFs are kept as they are. The same book added twice isn't duplicated. A cover picture in an EPUB becomes page 1. Needs pandoc, Chrome or Chromium and poppler on the computer; without them PDFs can still be added.
+- **DRM:** books from Kindle, Kobo, Apple Books and Google Play are locked and can't be opened; the card says so. Password-locked PDFs are refused too.
+- **Read aloud** works when the book has real text (the card marks picture-only PDFs). Running heads and page numbers are dropped, and the screen follows the voice exactly because the text layer matches the page.
+- Shared by the whole household; **Remove** deletes the book from the computer.
+
+## Reading books aloud
+
+Books can be read to you. It is off unless you choose it from a book's menu, and nothing changes for books you read by eye.
+
+- **What is read.** Bibles are read from the text in their PDF: page headers and page numbers are skipped, verse numbers are not spoken, and each chapter is announced ("Genesis, chapter two."). A page can start in the middle of a sentence, so the reading is cut at sentence ends and the voice never stops half way through one at a page turn. **Book Studio** books are read from their chapter text in the database (their PDF pages are pictures), a few paragraphs at a time; figure captions and picture lines are skipped, and the page on screen follows along at an estimated place in the chapter. **Comic Studio** books are not read: their words are drawn into the pictures.
+- **How it plays.** The bridge makes the speech on this computer with the same local Kokoro voice the Morning Briefing uses, turns it into mp3 and serves it to the TV. The section being read and the next two are made ahead of time, one at a time, so after a short wait at the start the reading goes on without gaps. The audio is cached by a hash of the text, voice and speed (so a repeat costs nothing) in `bookcache/audio` inside the launcher's data folder, and files untouched for 14 days are removed when the bridge starts. The first words of a Bible take roughly 20 to 40 seconds to be ready the first time.
+- **Controls.** Roku: **Options (`*`)** opens the menu (Read aloud, Reading speed, Voice); while reading, **OK** or **Play** pauses and resumes, **Left/Right** move a page (the reading carries on from there), **Down/Up** scroll, **Back** stops and closes. Google TV: **OK** (or Menu) opens the options menu; **Play/Pause** pauses and resumes while reading and still switches the dark theme otherwise.
+- **Settings.** Voice and speed are kept for the whole household in `narration.json` (default Heart, speed 1.0; speeds 0.85, 1.0, 1.15 and 1.3 from the menu). Changing them affects the next sections made; sections already made keep their voice.
+- **Needs.** The Kokoro voice (installed for the Morning Briefing) and `ffmpeg`, `pdftotext`. If no voice is installed the menu says so.
+- **Bridge routes.** `GET /books/narr?key=...&page=N` (or `seg=N`) returns the section to play and whether its audio is ready (ask again in two seconds if not); `GET /books/narr/audio/<signed prefix>/<key>/<hash>.mp3` serves it with Range; `POST /books/narr/settings` saves the voice and speed.
 
 ## Using the launcher on the TV
 
@@ -258,7 +396,7 @@ Only open this on a network you trust: anyone who knows the PIN and can reach th
   - **Ring Security**: snapshots with battery levels and live view with audio.
   - **Video Studio**: play videos you generated. It remembers where you stopped and offers to resume (press `*` to start from the beginning). Left, Right, Rewind and Fast-forward scrub, going faster the more you press; OK confirms the jump.
   - **Photos**: your Stickers, Age Shift, Storyboard and Time Machine results. Hidden groups never appear, and password-protected groups show as locked with nothing inside.
-  - **Books**: Comic Studio and Book Studio PDFs and your Bibles. Each remembers the page you were on, and has a contents and chapter list (see card 5).
+  - **Books**: Comic Studio and Book Studio PDFs and your Bibles. Each remembers the page you were on, and has a contents and chapter list (see card 5). **Read aloud** is optional and never on by itself: open a Bible or Book Studio book, press **Options** on Roku (the `*` key), or **OK** on Google TV, and choose *Read aloud from this page*. It reads on by itself, turns the pages as it goes, pauses and resumes with OK or Play, and Left/Right move to another page. The same menu changes the reading speed and the voice. See "Reading books aloud" below.
   - **Claude, Codex and Grok**: a terminal for that coding agent on your computer. It asks for your PIN each time (see card 6).
   - **Box Status**: your JunctionBox machines.
 - **Web Video**: browse a website on the TV. Arrow keys either **jump** between links or move a **pointer** (switch with `*`, then Mode). **OK** clicks, **Rewind and Fast-forward** scroll, **Back** goes to the previous page. When the page has a video, a green badge says **VIDEO FOUND**; press **Play** and it plays in the Roku's own player. Videos protected by copy protection (Netflix, Hulu, Disney+ and similar) can't play this way.
@@ -272,7 +410,7 @@ Only open this on a network you trust: anyone who knows the PIN and can reach th
 
 - **Updating**: install a newer `smart-tv-launcher.zip`, restart JunctionBox, then on the Smart TV Launcher page press **Update the bridge** (if offered) and **Update** on each TV.
 - **Removing a TV**: **Remove** on its row. You'll be asked whether to also delete the launcher app from the TV.
-- **Removing everything**: remove the TVs, press **Stop** on the bridge, delete the plugin, and delete the folder `~/.roku-launcher`. On Linux also run `systemctl --user disable --now roku-launcher-bridge`; on macOS delete `~/Library/LaunchAgents/com.junctionbox.roku-launcher-bridge.plist`.
+- **Removing everything**: remove the TVs, press **Stop** on the bridge, delete the plugin, and delete the folder `~/.roku-launcher`. On Linux also run `systemctl --user disable --now roku-launcher-bridge`; on Windows also run `Stop-ScheduledTask JunctionBox-roku-launcher-bridge; Unregister-ScheduledTask JunctionBox-roku-launcher-bridge -Confirm:$false` in PowerShell; on macOS delete `~/Library/LaunchAgents/com.junctionbox.roku-launcher-bridge.plist`.
 
 ## Troubleshooting
 
@@ -315,6 +453,7 @@ The bridge's log is `~/.roku-launcher/bridge.log`; **Show log** displays the end
 - Anything your plugins mark as hidden stays hidden, and password-protected photo groups appear locked with nothing inside, on the TV too.
 - The Agents tile lets a TV talk to your JunctionBox agents, which can act on your computer, so it uses the terminal PIN and the same lockout and idle limits, goes through JunctionBox's own run code (the agent's permissions apply), and only ever sends a pop-up to the TV that started the chat.
 - The Claude, Codex and Grok terminals are a remote shell for the account that runs the bridge. They are off until you set a PIN, ask for it every time, lock after five wrong tries and sign out after 15 idle minutes; the PIN is stored only as a salted hash. Box shells reach every box you've added to JunctionBox with the credentials JunctionBox already holds for it, so a PIN holder has the same access to those boxes as you do from JunctionBox's own terminal. Each agent starts in the permission mode you chose on card 6, so a "do everything" mode means anyone with the PIN can act as you on that computer. Only use it on a network you trust.
+- The Morning Briefing's calendar addresses are credentials: they are kept in `briefing-calendars.json` (mode 600) in the data folder, are never returned by any page or shown again, and are never written to a log. A market-data key is stored the same way and only ever reported as "saved". The briefing's files are served to a TV only through short-lived signed links, one folder per day, and never outside that day's folder.
 - Don't expose the bridge's port to the internet.
 
 ## For developers
@@ -326,7 +465,14 @@ The bridge's log is `~/.roku-launcher/bridge.log`; **Show log** displays the end
 - The terminals: `launcher/bridge/terminal.py` runs each agent or box shell in a pseudo-terminal (`pty`), keeps its screen and scrollback with `pyte`, and shares one PIN check and session key across agents. `launcher/bridge/terminal_modes.json` is the single list of each agent's permission modes (the page and the bridge both read it); the chosen modes are in `term-modes.json` and the PIN hash in `term-pin.json`, both in the data folder with mode 600. The Roku can't draw a monospace font from a Font node (it rendered nothing), so the bridge draws the screen as a PNG with Pillow and the bundled DejaVu Sans Mono (braille characters are drawn as dots) and the Roku shows it in two posters it swaps; the signed picture URL needs no header. Google TV draws the same screen as coloured text. `launcher/tools/make_term_tiles.py` draws the tiles.
 - Bibles: `launcher/bridge/pdfbooks.py` renders PDF pages to pictures and reads the contents lists; `launcher/tools/make_bibles.py` builds the Bible PDFs and their contents from the bundled texts in `launcher/bibles` (seven `*.json.gz` plus `index.json`). Book Studio and Comic Studio write `<id>.toc.json` next to each book when it is built.
 - Screenshots: the pictures in `docs/images/roku` are real screenshots of a Roku (the developer page's Screenshot tool gives a 1920x1080 picture of what the TV draws, and the Roku's remote-control port presses the buttons), taken with the demo data so nothing real appears. The tools, and how to run them, are in `launcher/tools/demo` (`README.md` there); `make_tv_mockups.py` makes the TV-framed and animated versions used on the website in `docs/images/roku/website`.
-- Tests: `cd plugins/source/smart-tv-launcher && PYTHONPATH=../../../backend pytest backend/tests/` (85 tests).
+- Morning Briefing: the work is in the plugin's `backend/briefing_*.py`. `briefing_calendar`, `_weather`, `_news`, `_scripture` and `_markets` each fetch and check one kind of content (only what the sources returned, with dates, and a stated gap when a source fails); `briefing_script` lays it out as beats (a spoken paragraph plus a card) and sizes the news and scripture to the time left; `briefing_voice` (Kokoro in `~/.junctionbox/tts`, cached by text, voice and speed) and `briefing_render` (Pillow cards from `briefing_cards`, ffmpeg, captions, 1920x1080 at 30 fps, H.264 and AAC with the index at the front, verified after it is built) make the video; `briefing_clips` keeps the clip library and builds the slow looping beds; `briefing_engine` runs it all, writes each day to `~/.junctionbox/briefing/days/<date>/` (`manifest.json` is written last, so a TV never sees a half-made briefing), retries with a growing wait, and catches up after a restart. Settings are `briefing.json` in the data folder, validated by `briefing_config`. The bridge side is `launcher/bridge/briefing.py` (reads a day's folder, signs links, decides the once-a-day auto-play); the Roku screen is `BriefingScreen`, the Google TV page is `gtv/briefing.js`. The bridge's power-on watcher passes `contentId=briefing` when it launches the Roku app for a first turn-on.
+- Tests: `cd plugins/source/smart-tv-launcher && PYTHONPATH=../../../backend pytest backend/tests/` (234 tests).
 - Screen share: `launcher/bridge/screenshare.py` opens JunctionBox's existing screen sharing in a headless browser (Playwright) on `launcher/bridge/novnc/viewer.html` (noVNC 1.7.0 served to the browser from disk, never over the network), takes a JPEG of it a few times a second, crops and zooms it with Pillow, draws the pointer, and turns the TV's keys into mouse and keyboard events (mouse through the browser, keys through noVNC's `sendKey`). The plugin starts the session with JunctionBox's own `screen_share.start_screen_share` (`POST /api/plugins/smart-tv-launcher/mcp/share/start/{box}`, loopback only, bridge-only token, same throttle) and hands the viewer a one-time login for the socket; the bridge revokes that login the moment the socket is open, and the plugin will only revoke logins it handed out. The same PIN and session key as the terminals guard it, and the share ends when the TV stops asking for pictures.
 - Box shells: the bridge never holds JunctionBox's master key, so for a box it asks the plugin (`GET /api/plugins/smart-tv-launcher/mcp/box/{id}`, loopback only, bridge-only token, same throttle as the secret route; a TV's own token is refused). The plugin decrypts the box's credentials, writes a private temporary key file (mode 600 under `~/.junctionbox/keys`) and returns the `ssh` command; a password goes in the `SSHPASS` environment variable, never on a command line. The bridge deletes the key file when the shell ends and sweeps any left by a crash when it starts. The picker reads only the box id, name, host and platform from the database; the credential columns are never selected. They use a throwaway database and data folder, and a fake Roku developer page that checks the digest login and package upload, and never touch your real TVs.
 - Roku BrightScript notes learned the hard way: never name things `left`, `step` or `next`; a one-line `if ... then A : B` runs `B` regardless, so use multi-line `if`; a dialog hands focus back to whatever had it before, so call `setFocus(true)` on your screen after closing one; custom `Font` nodes can render nothing on a real device; a Task node already has a `state` field; `setFocus(true)` on a parent does nothing while a hidden child list still holds focus, so give a screen a dedicated focus node.
+
+## Free and paid
+
+The launcher is free. Only Claude, Codex and Grok, agents, terminals and screen sharing need a paid JunctionBox (Pro). Everything else (apps, books, game schedules, reminders, the morning briefing, cameras, recipes) stays free.
+
+Every JunctionBox install starts with a 7-day trial of everything. When it ends and there is no license, those paid screens answer "The 7-day trial has ended" and the free ones carry on. The bridge asks JunctionBox (`GET /access`) and remembers the answer for a minute; if JunctionBox can't be reached the last answer stands. A license (Settings, License) ends the trial and unlocks everything for good.
