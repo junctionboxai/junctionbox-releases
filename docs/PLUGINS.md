@@ -66,6 +66,8 @@ Gives your Roku TVs and boxes, and your Google TV and Android TV sets, a custom 
 
 The plugin does the set-up for you: it starts the small background program the TV talks to, finds your Rokus on the network, and installs the launcher onto each one with a click, then keeps them up to date. You turn on developer mode on each Roku once. For a Google TV you turn on wireless debugging once and pair it with a code; the plugin installs a small Android app, which can become the TV's Home screen so the Home button opens the launcher. The step-by-step guide, including exactly how to turn on developer mode and troubleshooting, is `docs/SMART_TV_LAUNCHER.md`. Works on Linux and macOS; Python 3.9 or newer is needed, and ffmpeg, poppler and Google Chrome unlock Ring live view, PDF books and Web Video.
 
+An **Android tablet launcher** makes a tablet's Home screen from the same bridge: a touch version of the launcher with your apps and pinned JunctionBox plugins, agent chat, Home Control, recipes, reminders, Ring cameras, a terminal and screen sharing, all behind the same PIN as the TV.
+
 Also on the TV: a **Games** tile (one row of games off the JunctionBox screen) with four original arcade games made for the Roku and free for everyone: **Tap Takeover** (a maze chase), **Stack Attack** (falling blocks), **Pacific Fury** (air combat with six missions and a boss at the end of each) and **Junction John: The Lost Circuits** (a story platformer in six worlds, with bosses, warp conduits and narrated Cinematics). The household's top ten for each game is kept on your computer, so every TV shares one list. A **Grill** tile shows a Pit Boss grill's temperatures (see Pit Boss Grill), and the grill can tell the TVs when it is ready.
 
 ## Pit Boss Grill

@@ -426,6 +426,21 @@ Books can be read to you. It is off unless you choose it from a book's menu, and
 - **Needs.** The Kokoro voice (installed for the Morning Briefing) and `ffmpeg`, `pdftotext`. If no voice is installed the menu says so.
 - **Bridge routes.** `GET /books/narr?key=...&page=N` (or `seg=N`) returns the section to play and whether its audio is ready (ask again in two seconds if not); `GET /books/narr/audio/<signed prefix>/<key>/<hash>.mp3` serves it with Range; `POST /books/narr/settings` saves the voice and speed.
 
+## Android tablet launcher
+
+The plugin also contains a launcher for an **Android tablet** (Android 8 or newer). It is a small app, `tablet.apk` (package `com.junctionbox.tablet`), that shows the bridge's touch pages full screen and can be the tablet's Home screen. The pages come from your computer, so new features appear without reinstalling the app, and the same bridge and key are used as for the TVs.
+
+- **Home:** your apps as icons (with favorites you choose) and the JunctionBox plugins you pin. A battery and network indicator is shown, and the app can float as a small picture-in-picture window.
+- **Screens:** **Agents** (chat with your JunctionBox agents), **Home Control**, **Recipes**, **Reminders**, **Cameras** (Ring), **Terminal** and **Screen Share**. Agents, Terminal and Screen Share use the same PIN as on the TVs (card 6); one PIN unlocks all three.
+- **Away from home:** it tries the other addresses JunctionBox publishes (Tailscale Funnel, card 7) when your home address can't be reached.
+- **Setting it up (by hand for now; the plugin page has no install button for tablets):**
+  1. On the tablet turn on *Developer options* and *Wireless debugging* (or connect USB debugging), and connect from your computer with `adb`.
+  2. Install the app, which is in the plugin's folder (`~/.junctionbox/plugins/smart-tv-launcher/launcher/android-tablet/tablet.apk`): `adb install tablet.apk`.
+  3. Give it the bridge address and key once: `adb shell am start -n com.junctionbox.tablet/.MainActivity --es bridge http://YOUR-COMPUTER:PORT --es token KEY`. The address is your computer's address on the home network and the bridge's port (8791 unless you changed it, in which case it is in the file named `port` in the bridge's data folder), and the key is the file named `token` in that same folder (`~/.roku-launcher` on Linux and macOS).
+  4. Press Home on the tablet and choose JunctionBox as the Home app if you want it to be the Home screen.
+- **Building the app yourself:** `launcher/android-tablet/build_apk.sh` builds it with the Android SDK command-line tools. The signing key is kept outside the plugin (`~/.junctionbox/tablet-launcher-android.keystore`); keep it, because a tablet only accepts an update signed with the same key.
+- **Files:** the app is in `launcher/android-tablet/` (`src/.../MainActivity.java`), the touch pages are in `launcher/bridge/tablet/` (`index.html`, `core.js`, `home.js`, `agents.js`, `hc.js`, `recipes.js`, `reminders.js`, `cameras.js`, `terminal.js`, `share.js`, `unlock.js`), and the bridge serves them at `/tablet/` and keeps each tablet's favorites and pinned plugins (`/tablet/favorites`, `/tablet/pinned_plugins`).
+
 ## The Grill tile
 
 ![The Grill tile on a Roku](images/roku/grill.jpg)
