@@ -213,7 +213,7 @@ The **Games** tile on the JunctionBox screen opens one row of four original game
 - **Pacific Fury**: air combat over six missions with a boss at the end of each. Your aircraft fires by itself; OK drops a bomb and \* changes weapon.
 - **Junction John: The Lost Circuits**: a story platformer in six worlds. Pick **New Game** to start the story, **Continue** to carry on, and **Cinematics** to watch any scene you have unlocked again. Warp conduits and the Fuse Vault lead to hidden stages, and each world ends in a boss.
 
-Each game has its own menu with High Scores, Settings and How to Play. The top ten for each game is shared by every TV in your house and kept on your computer. The cinematics are short narrated films made from your own computer's graphics card through Video Studio (Movie Maker); a copy of JunctionBox without them shows each scene as a story card instead. Back leaves a game.
+Each game has its own menu with High Scores, Settings and How to Play. The top ten for each game is shared by every TV in your house and kept on your computer. The cinematics are 35 short narrated films that come with the game: the opening, each world's intro and finale, and the boss scenes. They stream from your computer to the TV. If a film can't play, the scene shows as a story card instead. Back leaves a game.
 
 ### The grill
 
