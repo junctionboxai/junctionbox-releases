@@ -1,7 +1,7 @@
 # JunctionBox — Privacy Policy
 
 **Effective Date:** November 6, 2026
-**Version:** 1.1
+**Version:** 1.2
 
 This Privacy Policy explains what information **JunctionBox AI** (**"Licensor," "we," "us,"** or **"our"**) collects in connection with JunctionBox (the **"Software"**), how it is used, and the choices available to the individual or entity using the Software (**"you"** or **"your"**). This Policy is incorporated into the JunctionBox End User License Agreement (**"EULA"**) by reference. Terms defined in the EULA have the same meaning here unless stated otherwise.
 
@@ -67,6 +67,8 @@ We do not collect, and the Software does not transmit to us:
 ## 3. Third-party services you configure yourself
 
 The Software can be configured to connect to services you choose — AI model providers (Anthropic, OpenAI, xAI, Ollama, or local CLI logins), MCP servers, plugins, and any account a plugin integrates with (for example, an email account, a smart-home account, or a brokerage account, depending which plugins you install and configure). Each of those is a direct connection from your machine to that third party, using credentials you supply and control. We do not operate, see traffic through, or receive data from those connections. Your use of each is governed by that third party's own terms and privacy policy — review them before connecting an account or service that matters to you.
+
+The **Music** feature of the Smart TV Launcher plugin connects from your computer to public directories (Radio Browser and SomaFM for internet radio, Apple's podcast search and each podcast's own feed), to the music server you enter (for example Navidrome), and to the stations and podcast hosts you choose to play. Those requests come from your computer, with your IP address, and are governed by those services' own terms; we do not see them. Your music folders are read only on your computer, and the TV is given songs only through the bridge.
 
 A plugin's backend code runs with the same privileges as the Software's own core (see the EULA's Section 9 on third-party Plugins). A plugin's privacy practices are the plugin author's responsibility, not ours, unless the plugin was authored and distributed by us.
 
