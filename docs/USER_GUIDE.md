@@ -195,7 +195,7 @@ It has two parts. The **TV app** is installed on each TV (sideloaded on a Roku i
 ### Using the launcher on the TV
 
 - **Home:** the top row are your apps, then **Media Player** (play a video or audio address), **Web Video**, **JunctionBox** (a row of hub tiles, five at a time on a Roku) and **Settings**. Leaving an app with Back or Home returns to the launcher; to really leave, use *Settings, Exit launcher*.
-- **Hub tiles**, depending on the plugins you have: **Home Control** (lights, groups, colours, air conditioning, TV remote), **Ring Security** (snapshots, live view with audio), **Video Studio** (your generated videos, remembering where you stopped; **Movie Maker** can plan, review and export a whole movie from the couch), **Photos** (Stickers, Age Shift, Storyboard, Time Machine; hidden groups never appear and password-protected groups show as locked), **Books** (Comic Studio and Book Studio PDFs and your Bibles, each remembering its page, with a contents and chapter list and study guides, and an optional **Read aloud** that reads a Bible or Book Studio book to you, turning the pages as it goes: press Options (`*`) on Roku or OK on Google TV, never on unless you choose it; add your own EPUBs and PDFs, or free Project Gutenberg books, from the plugin page and they appear under **My books**), **Recipes**, **Box Status**. Favourite teams get their own tiles with the next game and a full schedule (set up on the plugin page, card 9), and TV reminders (card 10) turn the TV on and tell you what you asked to be reminded about, aloud, until you press Done.
+- **Hub tiles**, depending on the plugins you have: **Games** (four arcade games), **Grill** (a Pit Boss grill's temperatures), **Home Control** (lights, groups, colours, air conditioning, TV remote), **Ring Security** (snapshots, live view with audio), **Video Studio** (your generated videos, remembering where you stopped; **Movie Maker** can plan, review and export a whole movie from the couch), **Photos** (Stickers, Age Shift, Storyboard, Time Machine; hidden groups never appear and password-protected groups show as locked), **Books** (Comic Studio and Book Studio PDFs and your Bibles, each remembering its page, with a contents and chapter list and study guides, and an optional **Read aloud** that reads a Bible or Book Studio book to you, turning the pages as it goes: press Options (`*`) on Roku or OK on Google TV, never on unless you choose it; add your own EPUBs and PDFs, or free Project Gutenberg books, from the plugin page and they appear under **My books**), **Recipes**, **Box Status**. Favourite teams get their own tiles with the next game and a full schedule (set up on the plugin page, card 9), and TV reminders (card 10) turn the TV on and tell you what you asked to be reminded about, aloud, until you press Done.
 - **Web Video:** browse a website with the remote; when a page has a video a green **VIDEO FOUND** badge appears and **Play** hands it to the TV's own player. YouTube links open in the Roku's YouTube app. Videos you save in the **Watch List** plugin appear on its start page.
 - **Terminals, Box Shells, Screen Share and Agents** are powerful, so they stay off until you set a **PIN** (4 to 12 digits) on card 6. The TV asks for it each time, five wrong tries lock it for five minutes, and a session signs out after 15 idle minutes.
   - **Claude, Codex, Grok:** a terminal for that coding agent running on the JunctionBox computer. Card 6 lets you pick how much each may do without asking. Sessions keep running when you leave the screen.
@@ -203,6 +203,21 @@ It has two parts. The **TV app** is installed on each TV (sideloaded on a Roku i
   - **Screen Share:** a box's screen on the TV, driven with the remote's pointer; it needs the Web Video part.
   - **Agents:** chat with your JunctionBox agents, with the same permissions, sandbox and history as in the web app. Tool approvals and questions appear on the TV, and pop-ups go only to the TV that started the chat.
 - **JB Settings** (PIN) shows GPU services, machine credentials (write-only), system health and **Away access**, which publishes only the launcher bridge through Tailscale Funnel so a TV on another network can still use it.
+
+### Games
+
+The **Games** tile on the JunctionBox screen opens one row of four original games, free for everyone and made for the Roku:
+
+- **Tap Takeover**: a maze chase. You are a pint glass collecting bubbles while four bottle caps hunt you; power pours turn the tables.
+- **Stack Attack**: falling blocks, with a hold slot, a three-piece preview, combos and a choice of starting level.
+- **Pacific Fury**: air combat over six missions with a boss at the end of each. Your aircraft fires by itself; OK drops a bomb and \* changes weapon.
+- **Junction John: The Lost Circuits**: a story platformer in six worlds. Pick **New Game** to start the story, **Continue** to carry on, and **Cinematics** to watch any scene you have unlocked again. Warp conduits and the Fuse Vault lead to hidden stages, and each world ends in a boss.
+
+Each game has its own menu with High Scores, Settings and How to Play. The top ten for each game is shared by every TV in your house and kept on your computer. The cinematics are short narrated films made from your own computer's graphics card through Video Studio (Movie Maker); a copy of JunctionBox without them shows each scene as a story card instead. Back leaves a game.
+
+### The grill
+
+With the **Pit Boss Grill** plugin set up (Plugins, Pit Boss Grill, then add your grill), a **Grill** tile on the TV shows the grill and probe temperatures, what the grill is doing and any error, refreshed every few seconds. In the plugin you can also switch on alerts for each grill: the TVs wake, show it full screen and say it out loud when the grill reaches its temperature, a probe reaches its target, or the grill reports a problem such as being out of pellets.
 
 ### The Morning Briefing
 

@@ -131,6 +131,16 @@ Plugins are self-contained packages that extend JunctionBox with entirely new ca
 
 ![Comic Studio plugin](images/comic-studio.png)
 
+## Pit Boss Grill
+
+The **Pit Boss Grill** plugin watches and controls a Pit Boss WiFi pellet grill over your home network, with no cloud account. The page shows the grill and probe temperatures, what the fan, igniter, auger and light are doing, a chart of the last hour, and controls to set the temperature, switch the light and turn the grill off (starting it asks you to confirm someone is at the grill). **TV alerts** below the controls tell your TVs, out loud, when the grill is ready, a probe is done or something is wrong.
+
+![The Pit Boss Grill page](images/pit-boss.png)
+
+The same readings are on your TV, on the **Grill** tile of the JunctionBox screen:
+
+![The Grill tile on a Roku](images/roku/grill.jpg)
+
 ## Smart TV Launcher: your Roku and Google TV home screen
 
 The **Smart TV Launcher** plugin gives your Roku and Google TV sets a custom home screen, with your streaming apps, the weather and a row of JunctionBox controls, plus a narrated Morning Briefing every day. These pictures are the real launcher on a TV, showing made-up demo data. [`SMART_TV_LAUNCHER.md`](SMART_TV_LAUNCHER.md) has every step and key; [`USER_GUIDE.md`](USER_GUIDE.md) has the everyday how-to.
@@ -165,6 +175,13 @@ Coding-agent terminals (behind a PIN), a shell on any of your boxes, and your bo
 |---|---|
 | ![The PIN prompt](images/roku/terminal-pin.jpg) | ![Claude Code on the TV](images/roku/claude-answer.jpg) |
 | ![Box shells](images/roku/box-shells-list.jpg) | ![Screen Share](images/roku/screen-share-desktop.jpg) |
+
+**Games and the grill.** The **Games** tile on the JunctionBox screen opens a row of four free arcade games (Tap Takeover, Stack Attack, Pacific Fury and Junction John: The Lost Circuits). Each has its own menu, and the whole house shares one top ten per game. Junction John is a story game with narrated cinematics you can watch again from its **Cinematics** item. A **Grill** tile shows a Pit Boss grill's temperatures when the Pit Boss Grill plugin is set up.
+
+| | |
+|---|---|
+| ![Stack Attack](images/roku/game-stack-attack.jpg) | ![Pacific Fury](images/roku/game-pacific-fury.jpg) |
+| ![Junction John](images/roku/game-junction-john.jpg) | ![Junction John's Cinematics](images/roku/game-junction-john-cinematics.jpg) |
 
 **Opening it.** Press **Up** from the tiles to highlight the "Good morning" heading, then **OK** (**Right** moves on to the weather):
 
