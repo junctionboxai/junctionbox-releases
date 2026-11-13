@@ -176,7 +176,7 @@ Smart TV Launcher is a plugin that puts your own home screen on your Roku TVs an
 
 **Where it runs.** JunctionBox runs on Linux, macOS and Windows (and can manage Windows, Linux and macOS machines as boxes). The Smart TV Launcher's bridge runs on that same computer, and the launcher itself runs on Roku TVs and boxes, on Google TV / Android TV sets, and on Fire TV (Fire OS 7 or newer; built but not yet run on a real Fire TV).
 
-It has two parts. The **TV app** is installed on each TV (sideloaded on a Roku in developer mode, or a small Android app on a Google TV); nothing goes through Roku's channel store. The **bridge** is a small background program on the computer that runs JunctionBox: the TV asks it for weather, pictures and your data, and it sends the TV back to the launcher when you leave an app. Nothing leaves your home network except the weather lookup.
+It has two parts. The **TV app** is installed on each TV (sideloaded on a Roku in developer mode, or a small Android app on a Google TV); nothing goes through Roku's channel store. The **bridge** is a small background program on the computer that runs JunctionBox: the TV asks it for weather, pictures and your data, and it sends the TV back to the launcher when you leave an app. Nothing leaves your home network except the weather lookup and, for the Tutorials tile, one small public list of video links from junctionboxai.com (videos then play in the TV's own YouTube app).
 
 ### Setting it up
 
@@ -218,6 +218,10 @@ The plugin also contains a launcher for an **Android tablet** (Android 8 or newe
   4. Press Home on the tablet and choose JunctionBox as the Home app if you want it to be the Home screen.
 - **Building the app yourself:** `launcher/android-tablet/build_apk.sh` builds it with the Android SDK command-line tools. The signing key is kept outside the plugin (`~/.junctionbox/tablet-launcher-android.keystore`); keep it, because a tablet only accepts an update signed with the same key.
 - **Files:** the app is in `launcher/android-tablet/` (`src/.../MainActivity.java`), the touch pages are in `launcher/bridge/tablet/` (`index.html`, `core.js`, `home.js`, `agents.js`, `hc.js`, `recipes.js`, `reminders.js`, `cameras.js`, `terminal.js`, `share.js`, `unlock.js`), and the bridge serves them at `/tablet/` and keeps each tablet's favorites and pinned plugins (`/tablet/favorites`, `/tablet/pinned_plugins`).
+
+### Tutorials
+
+The **Tutorials** tile (Roku, Google TV and Fire TV) lists the JunctionBox AI video tutorials. Press OK on one and it plays in the TV's YouTube app. On the web console, **Video tutorials** in the left menu and a link on the Dashboard's Getting started card open the tutorials page on junctionboxai.com.
 
 ### Games
 

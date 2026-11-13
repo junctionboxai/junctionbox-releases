@@ -9,7 +9,7 @@ It has two parts, and the **Smart TV Launcher plugin** sets up both:
 - **The TV app**, a small app installed on each TV: a sideloaded app on a Roku (in developer mode), or a small Android app on a Google TV.
 - **The bridge**, a small background program on the computer that runs JunctionBox. The TV app asks the bridge for weather, camera pictures, your photos and so on, and the bridge sends the launcher back to the screen when you exit an app.
 
-Nothing here goes through Roku's channel store, and nothing leaves your home network except the weather lookup (Open-Meteo and the US National Weather Service).
+Nothing here goes through Roku's channel store, and nothing leaves your home network except the weather lookup (Open-Meteo and the US National Weather Service) and, for the Tutorials tile, one small public list of video links fetched from junctionboxai.com (an hourly request that sends nothing about your computer or TVs; the videos then play in the TV's own YouTube app).
 
 ## What it looks like
 
@@ -440,6 +440,15 @@ The plugin also contains a launcher for an **Android tablet** (Android 8 or newe
   4. Press Home on the tablet and choose JunctionBox as the Home app if you want it to be the Home screen.
 - **Building the app yourself:** `launcher/android-tablet/build_apk.sh` builds it with the Android SDK command-line tools. The signing key is kept outside the plugin (`~/.junctionbox/tablet-launcher-android.keystore`); keep it, because a tablet only accepts an update signed with the same key.
 - **Files:** the app is in `launcher/android-tablet/` (`src/.../MainActivity.java`), the touch pages are in `launcher/bridge/tablet/` (`index.html`, `core.js`, `home.js`, `agents.js`, `hc.js`, `recipes.js`, `reminders.js`, `cameras.js`, `terminal.js`, `share.js`, `unlock.js`), and the bridge serves them at `/tablet/` and keeps each tablet's favorites and pinned plugins (`/tablet/favorites`, `/tablet/pinned_plugins`).
+
+## The Tutorials tile
+
+A **Tutorials** tile on the JunctionBox screen (Roku, Google TV and Fire TV) opens a short list of the JunctionBox AI video tutorials. OK on a video opens it in the TV's own YouTube app: on a Roku the bridge sends the TV the same launch command its remote app would (`POST /tutorials/play`, only to a home-network address and only for a well-formed YouTube video id), because a Roku can open a video but not a channel page, so the Roku screen names the channel ("search for JunctionBox AI") instead; on Google TV and Fire TV the page hands a normal YouTube link to the TV, and the last row opens the channel.
+
+- **Where the list comes from:** `GET /tutorials/list` (`launcher/bridge/tutorials.py`). The bridge reads `https://junctionboxai.com/tutorials.json` at most once an hour (ten minutes after a failure), sends nothing about your computer or TVs, and keeps only well-formed entries (an 11-character YouTube id and short text, at most 40). If the site can't be reached, or the file is wrong, the list that ships with the plugin (`launcher/bridge/tutorials.json`) is used. The channel address is fixed in the code, never taken from the file.
+- **Adding a video:** add it to `tutorials.json` on the website and in the plugin copy; every TV shows it within the hour, with no release needed for the website's copy.
+- **Files:** `app/components/TutorialsScreen.brs/.xml` (Roku), `bridge/gtv/tutorials.js` (Google TV and Fire TV), `tools/make_tutorials_tile.py` (the tile picture), tests in `backend/tests/test_tutorials.py`. The Roku screen can be opened for checking with `contentId=tutorials`.
+- **Not tried on a real device:** the Fire TV and Google TV screens were checked in code and with the bridge route only; the Roku screen was checked on a Roku.
 
 ## The Grill tile
 
