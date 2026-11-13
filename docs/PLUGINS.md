@@ -10,7 +10,7 @@ Local smart-home control across more than one device protocol under one set of r
 
 ## Ring Security
 
-Links your own Ring account (email/password with 2FA) to sync doorbells, cameras, and chimes. Live View, on-demand snapshots, event history with recording playback, and a persisted monitor-wall layout.
+Links your own Ring account (email/password with 2FA) to sync doorbells, cameras, and chimes. Live View, on-demand snapshots, event history with recording playback, and a persisted monitor-wall layout. **Ring Security is a Pro feature:** it is included in the 7-day trial that every install starts with, and needs JunctionBox Pro ($49/year) after that. With Smart TV Launcher, the Ring tile on a Roku gains **picture views** during a live view: press Play/Pause to cycle Night green, Night red, Low light, Contrast, Heat map, Edges, Motion map (movement lit in orange) and Motion trails. They enhance or recolor what the camera sends and are not real infrared or thermal vision. Opening a camera takes about 4 to 8 seconds.
 
 ## iMessage Chat
 

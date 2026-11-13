@@ -87,6 +87,7 @@ This is where JunctionBox goes well beyond a single chat window:
 
 - **Where it runs:** JunctionBox runs on Linux, macOS and Windows (and manages Windows, Linux and macOS machines as boxes); the Smart TV Launcher's bridge runs on that same computer, and the launcher runs on Roku and Google TV / Android TV.
 - A **custom home screen for Roku and Google TV / Android TV** sets, installed from JunctionBox with no channel store: big tiles for your streaming apps, the weather, a quote line, and a JunctionBox screen with your lights and air conditioning, Ring cameras, generated videos and photos, books and Bibles, recipes, and box status. A small bridge on your computer serves it and sends the TV back to the launcher when you leave an app. Nothing leaves your home network except the weather lookup and, for the Tutorials tile, one small public list of video links from junctionboxai.com (videos then play in the TV's own YouTube app).
+- **Ring Security is a Pro feature** (included in the 7-day trial, then JunctionBox Pro).
 - **Picture views for Ring cameras**: on a Roku, Play/Pause during a live view cycles through Night green, Night red, Low light, Contrast, Heat map, Edges, Motion map and Motion trails, applied on your computer before the stream is sent to the TV.
 - **Tutorials tile**: the TV launcher lists the JunctionBox AI video tutorials and plays each in the TV's own YouTube app; the web console links to the same videos.
 - **Android tablet launcher**: the same bridge also turns an Android tablet (Android 8 or newer) into a touch home screen with your apps and pinned plugins, agent chat, Home Control, recipes, reminders, Ring cameras, a terminal and screen sharing, behind the same PIN as the TVs. Its screens are web pages served by your computer, so they update without reinstalling the app.
@@ -117,7 +118,7 @@ This is where JunctionBox goes well beyond a single chat window:
 ## Licensing
 
 - **Free**: up to 2 active agents, no account or payment required — you can still save as many agent configurations as you like.
-- **JunctionBox Pro** ($49/year): unlimited active agents. Upgrade and manage your subscription entirely through a Stripe-hosted checkout and billing portal — JunctionBox itself never sees your payment details.
+- **JunctionBox Pro** ($49/year): unlimited active agents, the Claude, Codex and Grok, agents, terminals and screen-sharing screens on your TVs, and Ring Security. Every install starts with a 7-day trial of all of it. Upgrade and manage your subscription entirely through a Stripe-hosted checkout and billing portal — JunctionBox itself never sees your payment details.
 - Licensing is verified against a cryptographically signed token, not a value that can simply be edited locally, and it fails closed: anything that doesn't check out resolves to Free, never Pro.
 - Works offline too: once activated, Pro stays active for up to 14 days without needing to reach the license server, refreshing automatically in the background the rest of the time.
 
