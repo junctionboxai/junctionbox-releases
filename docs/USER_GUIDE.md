@@ -219,6 +219,10 @@ The plugin also contains a launcher for an **Android tablet** (Android 8 or newe
 - **Building the app yourself:** `launcher/android-tablet/build_apk.sh` builds it with the Android SDK command-line tools. The signing key is kept outside the plugin (`~/.junctionbox/tablet-launcher-android.keystore`); keep it, because a tablet only accepts an update signed with the same key.
 - **Files:** the app is in `launcher/android-tablet/` (`src/.../MainActivity.java`), the touch pages are in `launcher/bridge/tablet/` (`index.html`, `core.js`, `home.js`, `agents.js`, `hc.js`, `recipes.js`, `reminders.js`, `cameras.js`, `terminal.js`, `share.js`, `unlock.js`), and the bridge serves them at `/tablet/` and keeps each tablet's favorites and pinned plugins (`/tablet/favorites`, `/tablet/pinned_plugins`).
 
+### Picture views for Ring cameras
+
+During a Ring live view on a Roku, press **Play/Pause** to cycle through picture views: Normal, Night green, Night red, Low light, Contrast, Heat map, Edges, Motion map and Motion trails. They enhance or recolour what the camera sends (they are not real infrared or thermal vision), and the choice is remembered for that camera.
+
 ### Tutorials
 
 The **Tutorials** tile (Roku, Google TV and Fire TV) lists the JunctionBox AI video tutorials. Press OK on one and it plays in the TV's YouTube app. On the web console, **Video tutorials** in the left menu and a link on the Dashboard's Getting started card open the tutorials page on junctionboxai.com.
@@ -274,7 +278,7 @@ The bridge listens on your home network only and every request needs a private t
 ## Licensing: Free vs. Pro
 
 - **Free**: up to 2 active agents, no account or payment needed, works fully offline.
-- **Pro** ($49/yr): unlimited active agents.
+- **Pro** ($49/yr): unlimited active agents, and Ring Security (cameras, live view and picture views). Every install gets a 7-day trial of Pro, Ring Security included; after it, Ring Security needs Pro.
 
 Settings → License shows your current tier and usage, and has Upgrade/Manage Subscription/Deactivate Device actions. Full details — activation steps, cancellation behavior, what data this involves — are in `deploy/README-release.md`'s Licensing section and `deploy/PRIVACY_POLICY.md`.
 
