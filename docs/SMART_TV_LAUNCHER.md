@@ -627,7 +627,7 @@ The bridge's log is `~/.roku-launcher/bridge.log`; **Show log** displays the end
 
 ## Free and paid
 
-The launcher is free. Only Claude, Codex and Grok, agents, terminals, screen sharing and **Ring Security** (the Ring plugin, its camera screens and the picture views) need a paid JunctionBox (Pro). Everything else (apps, books, game schedules, reminders, the morning briefing, recipes, the games, the grill) stays free.
+The launcher is free. Only Claude, Codex and Grok, agents, terminals, screen sharing, **Ring Security** (the Ring plugin, its camera screens and the picture views), **Home Control** and **Video Studio / Movie Maker** need a paid JunctionBox (Pro). Everything else (apps, books, game schedules, reminders, the morning briefing, recipes, the games, the grill) stays free.
 
 Every JunctionBox install starts with a 7-day trial of everything. When it ends and there is no license, those paid screens (Ring cameras included: the Ring Security plugin's own routes answer 402 as well, and it stops polling Ring) answer "The 7-day trial has ended" and the free ones carry on. The bridge asks JunctionBox (`GET /access`) and remembers the answer for a minute; if JunctionBox can't be reached the last answer stands. A license (Settings, License) ends the trial and unlocks everything for good.
 

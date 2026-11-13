@@ -278,7 +278,7 @@ The bridge listens on your home network only and every request needs a private t
 ## Licensing: Free vs. Pro
 
 - **Free**: up to 2 active agents, no account or payment needed, works fully offline.
-- **Pro** ($49/yr): unlimited active agents, and Ring Security (cameras, live view and picture views). Every install gets a 7-day trial of Pro, Ring Security included; after it, Ring Security needs Pro.
+- **Pro** ($49/yr): unlimited active agents, the Claude, Codex and Grok, agents, terminals and screen-sharing screens on your TVs, and these plugins: Ring Security, Home Control, iMessage Chat, iCloud Mail Cleanup, Slack Desktop, Kubernetes, DeviceLab, Video Studio, Book Studio, Comic Studio and Historical Intelligence. Every install gets a 7-day trial of all of it. After the trial those plugins show an upgrade card (your settings and data are kept) and unlock again with a license. The other plugins, the TV games, the tutorials, recipes, the watch list, the browsers, the image tools and the Morning Briefing stay free.
 
 Settings → License shows your current tier and usage, and has Upgrade/Manage Subscription/Deactivate Device actions. Full details — activation steps, cancellation behavior, what data this involves — are in `deploy/README-release.md`'s Licensing section and `deploy/PRIVACY_POLICY.md`.
 

@@ -1,5 +1,7 @@
 # JunctionBox — Optional Plugins
 
+**Pro plugins:** Ring Security, Home Control, iMessage Chat, iCloud Mail Cleanup, Slack Desktop, Kubernetes, DeviceLab, Video Studio, Book Studio, Comic Studio and Historical Intelligence are part of JunctionBox Pro. Every install gets a 7-day trial of them; after it they need a Pro license (the other plugins stay free).
+
 These are optional add-ons, not part of the base install. Each one is a separate `.zip` attached to this release. To install one: **Settings → Plugins → Browse for plugin ZIP**, pick the file you downloaded, then restart JunctionBox.
 
 None of these need any account or credential you don't provide yourself — every integration below takes its own login/API keys through its own setup screen after you install it.
