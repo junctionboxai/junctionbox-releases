@@ -452,6 +452,15 @@ While a Ring camera is live on a Roku, **Play/Pause** cycles through picture vie
 - **Delay:** the change shows after the playlist catches up, a few seconds. The Motion map greys the picture and lights up whatever moves in orange, with a fading trail: it keeps a slowly updating picture of the empty scene (so grainy night video stays calm) and highlights what differs from it. It learns the scene for the first second after you choose it, and again after each camera refresh.
 - **Not done yet:** the Google TV and Fire TV Ring screens do not have picture views (they use the same stream, so the filter route works, but the page has no button for it).
 
+## Zoom for the Ring live view
+
+While a Ring camera is live on a Roku, **OK** zooms in: **1x, 2x, 3x, then 5x to 25x in steps of five**. The **arrow keys** move around the picture, **\*** or **Back** zooms out, and opening a different camera starts un-zoomed (Ring cuts a stream every minute or so; reconnecting the same camera keeps your zoom). The top bar shows `ZOOM 4x` and the keys that apply.
+
+- **How it works:** the TV does not stretch the video. The bridge crops the camera's newest picture around the point you are looking at and sends it as a still picture a few times a second (`GET /ring/live/<prefix>/<id>/zoom.jpg?z=4&x=0.5&y=0.5`, signed like the stream itself); the TV shows it over the still-playing video, and moving around just slides that window.
+- **What it is not:** a digital zoom. You see as much detail as the camera's own picture holds, and no more.
+- **Licensing:** like the picture views, it is part of Ring Security (seven-day trial, then Pro).
+- **Not done yet:** the Google TV and Fire TV Ring screens do not have zoom.
+
 ## The Tutorials tile
 
 A **Tutorials** tile on the JunctionBox screen (Roku, Google TV and Fire TV) opens a short list of the JunctionBox AI video tutorials. OK on a video opens it in the TV's own YouTube app: on a Roku the bridge sends the TV the same launch command its remote app would (`POST /tutorials/play`, only to a home-network address and only for a well-formed YouTube video id), because a Roku can open a video but not a channel page, so the Roku screen names the channel ("search for JunctionBox AI") instead; on Google TV and Fire TV the page hands a normal YouTube link to the TV, and the last row opens the channel.
