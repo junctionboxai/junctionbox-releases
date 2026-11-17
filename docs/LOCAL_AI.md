@@ -34,7 +34,8 @@ Small models often fail at tools in boring ways: they write the tool call as tex
 
 - each turn the model's answer is forced into a valid tool call or a plain reply, and can only name tools that agent is already allowed to use;
 - the arguments are checked against the tool's own definition, and a bad call gets one retry with the error shown;
-- a value that isn't in your request or a tool's result is checked, and if the model made it up, the agent asks you instead.
+- a value that isn't in your request or a tool's result is checked, and if the model made it up, the agent asks you instead;
+- a plain question, summary or piece of code gets a direct answer, without a pointless tool call.
 
 It is **off by default**, and **on for agents created from the Local AI page**. It helps small and weak models most. A strong model gains little from it. The costs: replies appear all at once instead of streaming, and a turn can take a second model call. Measured on this project's own benchmark, two small models went from failing tool use to passing it (see **Test with guardrails** on an installed model, which measures a model both ways and keeps the results separate).
 
