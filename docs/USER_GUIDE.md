@@ -9,6 +9,7 @@ JunctionBox is single-user software (one password, no roles) — there's no sepa
 - [Getting started](#getting-started)
 - [Core concepts](#core-concepts)
 - [Providers: connecting AI models](#providers-connecting-ai-models)
+- [Local AI: free models on your own computer](#local-ai-free-models-on-your-own-computer)
 - [Creating and configuring agents](#creating-and-configuring-agents)
 - [Chatting with agents](#chatting-with-agents)
 - [Comparing agents side by side](#comparing-agents-side-by-side)
@@ -63,6 +64,39 @@ Settings isn't where providers live — go to **Models** in the sidebar.
 - **Ollama**: point JunctionBox at your Ollama server (defaults to `http://localhost:11434`); works with a remote Ollama server too, with an optional auth key.
 
 Only providers JunctionBox considers "configured" show up when you go to create an agent.
+
+## Local AI: free models on your own computer
+
+**Models > Local AI** (in the sidebar) finds free AI models your computer can run, installs one, and makes an agent that uses it. Nothing here costs money and nothing needs an account. Once a model is installed it works with no internet.
+
+1. Press **Find My Local AI**. JunctionBox reads your processor, memory, graphics card and free disk space. It does not guess: if it can't measure something (for example the memory of some graphics cards), it says so.
+2. Look at **Recommended for your computer**: the best overall model, the best for coding, and the one that uses the least memory. Each card says how much memory it needs, whether it fits comfortably or tightly, whether it will use the graphics card or the processor, and how big the download is.
+3. Press **Install**. You see the download progress, can cancel, and can resume later if it stops. If Ollama (the free program that runs the models) isn't installed or is too old for a model, JunctionBox shows you the exact steps and asks before it installs or updates anything.
+4. Press **Test**. JunctionBox runs one short question and measures it: how fast the model answers, and whether it really ran on the graphics card or the processor. That measurement is more reliable than the estimate, so look at it.
+5. Press **Create agent**. You get an agent that uses the model, with restricted permissions (it can chat and use read-only tools; it gets no write or shell access unless you give it).
+
+**BitNet, for computers with no graphics card.** On Linux, Local AI can also offer Microsoft's BitNet model, which is built to run fast on an ordinary processor. It is built on your computer the first time (10 to 20 minutes, about 2.5 GB of disk, and it needs the clang and cmake build tools, which JunctionBox can install for you after showing you the commands). It runs in its own folder, uses a lower priority so your computer stays responsive, starts when an agent needs it and stops when idle. It is a small general-purpose model: JunctionBox doesn't recommend it for coding, and its tool use is untested.
+
+**Benchmark: find out what a model can really do.** Press Benchmark on an installed model. JunctionBox runs 53 short, automatically graded tasks on your computer (a few minutes: chat questions, writing and fixing small bits of code, JSON output, choosing tools, respecting permissions, remembering a conversation) and shows, for each kind of work, whether the model is recommended, with the scores and what was needed. Code the model writes is run in a locked-down sandbox with no network and no access to your files (on Linux; elsewhere those tasks are skipped). The tasks are simple, so a pass means basic competence. Models that don't pass the tool-use tests are not recommended for running agent tasks by themselves.
+
+**Coding assistant and patches.** "Coding assistant" creates a cautious, read-only agent for small coding tasks. It can't change your files: it suggests changes as a diff. Paste the diff into **Review a patch**, choose the folder, and press Check: JunctionBox refuses unsafe paths (outside the folder, secrets, `.git`), tests that it applies cleanly, and changes nothing. If you then approve the exact list of files, it applies the patch, keeps a copy of the originals, and lets you undo it.
+
+**What to expect from small models.** These are small. They are good at everyday chat, short summaries, rewriting, simple questions and small bits of code. They make mistakes a large model wouldn't, they are unreliable at long multi-step work, and tool use is hit and miss. Check any code before you run it. For serious coding or research, use a stronger agent such as Claude or Codex. Each model card lists what it is good and bad at, and what JunctionBox knows (and doesn't yet know) about its tool use.
+
+**Your own computer decides what fits.** A rough guide: a computer with no graphics card and 8 GB of memory can run the smallest models slowly; 16 GB or more runs the 2B to 4B models at a usable speed; a graphics card with 8 GB of memory runs a 4B model comfortably. A longer context (how much text the model can hold) uses more memory, which is why the screen shows the estimate for your context setting.
+
+**Advanced** (bottom of the Local AI screen):
+
+- **Local-only mode.** When on, an agent that would use a cloud service (Anthropic, OpenAI, xAI, the Claude, Codex or Grok command line tools, or an Ollama cloud model) refuses to run and tells you why, instead of sending anything out. Local models keep working. It governs where the *model* runs: web search, fetch and other tools still follow each agent's own permissions.
+- **Preferred runtime** (automatic, graphics card only, processor only), **context length**, **unload an idle model after N minutes**, and the longest answer in a test.
+
+**Uninstalling.** Uninstall deletes a model JunctionBox installed. A model you already had in Ollama is never deleted from here, only forgotten.
+
+**Free tier.** Local agents count as agents like any other: the Free plan allows 2 active agents, and Pro ($49/year) is unlimited. There is no separate charge for local AI.
+
+**Catalog and integrity.** The model list is curated and only includes models under permissive licenses (Apache-2.0 or MIT). Each entry records the exact version JunctionBox tested; after an install, JunctionBox checks what Ollama downloaded against it, and tells you if the model has been updated since. A newer catalog can be dropped in at `~/.junctionbox/local-ai/catalog.json`; every entry is validated and any that fails is ignored.
+
+**Guarded tool use, smart routing and other computers.** Three more parts of the same screen, all optional and off until you use them: *Guarded tool use* (an agent setting, on for Local AI agents) makes small models dependable with tools by checking every tool call in code; *Smart routing* sends each kind of task to the cheapest agent that has earned it, with fallback and never to the cloud without your approval; and *Other computers (Boxes)* runs the whole Local AI flow on your other Linux or Mac computers through their own Ollama, over SSH, with nothing opened to the network. They are described in [LOCAL_AI.md](LOCAL_AI.md); how it works and what has been tested is in [LOCAL_AI_MANAGER.md](LOCAL_AI_MANAGER.md).
 
 ## Creating and configuring agents
 

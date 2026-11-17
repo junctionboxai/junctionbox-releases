@@ -12,6 +12,15 @@ JunctionBox doesn't lock you into one vendor or one way of paying for inference.
 
 On Linux and macOS, every CLI agent runs through its native permission system *and* an OS-level sandbox on top of it (see Security, below; on Windows, which has no equivalent, agents run with your account's rights and this is stated plainly in Settings) — the CLI's own guardrails are never the only thing standing between an agent and your filesystem.
 
+## Local AI — free models on your own computers
+
+- **Find, install, test, benchmark.** A hardware scan recommends models your computer can really run (curated, permissively licensed, digest-verified). Install with progress, cancel and resume; a measured test run shows real speed and whether it used the graphics card; a 53-task benchmark shows per skill whether a model is recommended, graded automatically with generated code run in a sandbox.
+- **Create an agent in one click** — restricted permissions by default, plus a read-only coding assistant that proposes patches you review and apply (with backup and undo).
+- **Guarded tool use** — a per-agent option (on for Local AI agents, off by default) that forces tool calls into a valid form, restricts them to the agent's allowed tools, validates arguments with a retry, and turns invented values into questions. On the built-in benchmark, small models went from failing tool use to passing it.
+- **Smart routing** — deterministic rules you set, per kind of task: the cheapest agent that passed the benchmark for it, automatic fallback, no silent cloud use (approval or an explicit allow), full explanation of every skip.
+- **Other computers (Boxes)** — scan a Linux or Mac Box, watch its memory and load, run Ollama and models there, benchmark them on that hardware and create agents on them, reached over SSH only, with nothing opened to the network.
+- **Local-only mode** refuses any agent that would use a cloud model; Microsoft BitNet is available on Linux for computers with no graphics card.
+
 ## Agents — precise control over what each one can do
 
 - Give each agent its own provider, model, system prompt, execution timeout (30 seconds to 2 hours), and working directory.
