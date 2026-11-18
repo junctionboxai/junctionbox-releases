@@ -36,7 +36,7 @@ It runs on **Linux (x86-64), macOS (Apple silicon) and Windows (64-bit)**. The c
 
 The **Smart TV Launcher** plugin swaps the usual "which app?" screen for your own home screen on **Roku** TVs and boxes, **Google TV / Android TV** sets and **Fire TV** (Fire OS 7 or newer), with a matching Android tablet launcher. Your streaming apps are still there as big tiles, and the TV returns to the launcher when you leave an app. Around them:
 
-- **The house:** your lights and air conditioning, Ring camera live views (with night, heat-map and motion views), and your Pit Boss grill.
+- **The house:** your lights and air conditioning, Ring camera live views with eight picture filters (see Ring Security below), and your Pit Boss grill.
 - **Things you made:** your generated videos, photos and books, a watch-later list, and recipes with a video playing beside them.
 - **Reading:** seven public-domain Bibles, your own books, and read-aloud.
 - **Your agents, on the big screen:** terminals for Claude Code, Codex and Grok on your computer, shells on your other machines, screen sharing you drive with the remote, and a chat with your JunctionBox agents where you watch them work and approve what they ask. All of it sits behind a PIN.
@@ -52,7 +52,7 @@ JunctionBox is built to be extended. A plugin is a small package with its own si
 **Home and TV**
 - **Smart TV Launcher**: the Roku, Google TV and Fire TV home screen above.
 - **Home Control**: lights, plugs and air conditioning across protocols, with rooms, groups and schedules.
-- **Ring Security**: your Ring doorbells and cameras, live view and recordings. A Pro feature, included in the 7-day trial.
+- **Ring Security**: your Ring doorbells and cameras, with live view, snapshots, event history and recordings. On the TV, a live view has eight picture filters you cycle with Play/Pause: Night green, Night red, Low light, Contrast, Heat map, Edges, Motion map and Motion trails. They enhance or recolor what the camera sends and are not real infrared or thermal vision. A Pro feature, included in the 7-day trial.
 - **Pit Boss Grill**: watch and control a Pit Boss WiFi grill over your home network, no cloud account.
 - **TV Player**: one-click tiles for YouTube, Netflix, Hulu and other streaming sites, in a real browser window.
 - **Watch List**: a shelf of videos to watch later, shown on your TV.
