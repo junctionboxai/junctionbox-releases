@@ -483,6 +483,16 @@ The arcade lives behind a **Games** tile on the JunctionBox screen, so the games
 | ![Stack Attack's menu](images/roku/game-stack-attack.jpg) | ![Pacific Fury's menu](images/roku/game-pacific-fury.jpg) |
 | ![Junction John's title menu](images/roku/game-junction-john.jpg) | ![Junction John's Cinematics list](images/roku/game-junction-john-cinematics.jpg) |
 
+### The games on Google TV and Fire TV
+
+Tap Takeover, Stack Attack, Pacific Fury and Junction John: The Lost Circuits play on a Google TV or Fire TV with the ordinary remote, with the same rules, the same pictures and sounds, the same household top tens and (for Junction John) the same saved game per TV and the same story cards and cinematics as on the Roku. Open **Arcade** on the launcher's home screen; Back from a game goes to its menu or pause screen first, then returns to the Arcade.
+
+- **How it works.** Each game is an HTML canvas game (1280 x 720, scaled to the screen) in `launcher/bridge/gtv/arcade/`, shown by the existing launcher app, so there is nothing new to install: update the plugin and restart the bridge. The pictures, sounds and level data are the Roku app's own files, served read-only by the bridge at `/arcade/img/...`, `/arcade/snd/...` and `/arcade/data/...` (`arcade_root` in `launcher_bridge.py`). Scores and saves use the same `/game/score`, `/game/scores` and `/game/save` routes as the Roku.
+- **Same rules, not a rewrite.** The Junction John engine (`jack_engine.js`) is translated from the Roku game's own `JackEngine.brs` by `launcher/tools/brs2js.py`, and the Roku game's own self test is translated the same way and run in `node --test` (`arcade/tests/`); Pacific Fury's engine is checked against the Roku engine run for run; Stack Attack against the golden games; Tap Takeover against the maze data. To change a rule, change the Roku `.brs` and run the translator again (`python3 tools/brs2js.py --no-helpers app/components/JackEngine.brs > bridge/gtv/arcade/jack_engine.js`; the shared helpers are `bs_helpers.js`, made with `--helpers-only`).
+- **Controls.** The arrows move and OK is the main button, as on the Roku. The Roku's rewind, fast-forward and `*` keys are used where a remote has them; a Google TV remote has none of those, so **Play** does their job: Pacific Fury's weapon change and Junction John's tool change (or an Arc Charger bolt) on the Play button, and the pause menu of Junction John has **Change tool**. Hold **Up** or **OK** exactly as the Roku how-to screens say.
+- **Not on Google TV.** Junction Takeback! is held back from public releases on every platform and is left out of the shipped plugin (`scripts/package-local-plugins.py`); it is in the owner's own copy only.
+- **Checking it.** `cd launcher/bridge/gtv && node --test arcade/tests/*.test.js` (52 tests, including the Roku games' own self tests). The games have been run on an Android TV emulator with the remote's keys; they have not yet been played on a real Google TV or Fire TV, and a very old TV WebView could be slow (the code avoids newer browser features on purpose).
+
 ## Tap Takeover, the game (card 13)
 
 A maze game on the Roku, on the JunctionBox screen next to Music, free for everyone. You are a pint glass sliding along a bar top collecting bubbles while four bottle caps chase you. The big glasses in the corners (a fresh pour) let you knock the caps for a few seconds; hops, pretzels and barrels are bonus points. It is entirely original: the pictures, sounds and mazes are drawn by `launcher/tools/make_game_assets.py` (the same seeds always give the same four mazes, each checked to have no dead ends and no cut-off corners).
@@ -490,7 +500,7 @@ A maze game on the Roku, on the JunctionBox screen next to Music, free for every
 - **Controls:** arrows move, OK or Play pauses, Back pauses and then quits. Three glasses, an extra glass at 10,000 points, and the caps speed up each level.
 - **The caps:** each chases differently (straight at you, ahead of you, a flank from the first cap, and one that shies away when it gets close). They alternate between scattering to their corners and chasing, and the house door opens one at a time.
 - **Scores:** the top ten for the whole house are kept on the computer (`~/.roku-launcher/game-scores.json`) so every TV shares one list. A new high score asks for three letters. Card 13 on the plugin page shows the list (with which TV set it) and can clear it.
-- **Where it runs:** Roku only for now. Sounds are played from the app's main thread (a Roku only allows that), pictures and sounds ship inside the app (`app/images/game`, `app/sounds`).
+- **Where it runs:** the Roku, and on Google TV and Fire TV (see *The games on Google TV and Fire TV* below). On the Roku, sounds are played from the app's main thread (a Roku only allows that), pictures and sounds ship inside the app (`app/images/game`, `app/sounds`).
 
 ## Stack Attack, the falling-block game (card 13)
 
