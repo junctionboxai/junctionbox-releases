@@ -34,11 +34,52 @@ It runs on **Linux (x86-64), macOS (Apple silicon) and Windows (64-bit)**. The c
 
 ## On your TV
 
-The optional **Smart TV Launcher** puts your own home screen on **Roku, Google TV and Fire TV** sets: your streaming apps, the weather, your lights and cameras, your books, and terminals for your coding agents. It adds a **Morning Briefing**, a picture frame, music, game schedules and reminders, and an **arcade** you play with the ordinary remote: Tap Takeover, Stack Attack, Pacific Fury and Junction John: The Lost Circuits. Google TV and Fire TV support is newer than Roku support, so tell us if something runs slowly or looks wrong. Setup is in [`docs/SMART_TV_LAUNCHER.md`](docs/SMART_TV_LAUNCHER.md).
+The **Smart TV Launcher** plugin swaps the usual "which app?" screen for your own home screen on **Roku** TVs and boxes, **Google TV / Android TV** sets and **Fire TV** (Fire OS 7 or newer), with a matching Android tablet launcher. Your streaming apps are still there as big tiles, and the TV returns to the launcher when you leave an app. Around them:
+
+- **The house:** your lights and air conditioning, Ring camera live views (with night, heat-map and motion views), and your Pit Boss grill.
+- **Things you made:** your generated videos, photos and books, a watch-later list, and recipes with a video playing beside them.
+- **Reading:** seven public-domain Bibles, your own books, and read-aloud.
+- **Your agents, on the big screen:** terminals for Claude Code, Codex and Grok on your computer, shells on your other machines, screen sharing you drive with the remote, and a chat with your JunctionBox agents where you watch them work and approve what they ask. All of it sits behind a PIN.
+- **Every day:** a Morning Briefing, game schedules for your teams, reminders, a picture frame and music.
+- **An arcade you play with the ordinary remote:** Tap Takeover, Stack Attack, Pacific Fury and Junction John: The Lost Circuits, with household top-ten scores and a saved game for Junction John.
+
+Roku support is the most mature. Google TV and Fire TV are newer (the games there have been run in an emulator and not yet on a real Fire TV), so tell us if something runs slowly or looks wrong. Setup for all three is in [`docs/SMART_TV_LAUNCHER.md`](docs/SMART_TV_LAUNCHER.md).
 
 ## Plugins
 
-Plugins install from Settings → Plugins and extend JunctionBox into smart-home control and cameras, iMessage and Slack, Kubernetes, private browsing, recipes, image, comic, book and video production, 3D-printable models, and more. [`docs/PLUGINS.md`](docs/PLUGINS.md) lists what is available today, and [`docs/JUNCTIONBOX_PLUGIN_CONTEXT.md`](docs/JUNCTIONBOX_PLUGIN_CONTEXT.md) describes the format if you want to write your own.
+JunctionBox is built to be extended. A plugin is a small package with its own sidebar page, its own backend and, if it wants, tools your agents can call. Install one from **Settings → Plugins → Browse for plugin ZIP**; each is attached to the [latest release](../../releases/latest). There is no marketplace or review step, and the **Plugin Builder** will scaffold a correctly structured package for you to fill in. The format is in [`docs/JUNCTIONBOX_PLUGIN_CONTEXT.md`](docs/JUNCTIONBOX_PLUGIN_CONTEXT.md). The 25 plugins available today:
+
+**Home and TV**
+- **Smart TV Launcher**: the Roku, Google TV and Fire TV home screen above.
+- **Home Control**: lights, plugs and air conditioning across protocols, with rooms, groups and schedules.
+- **Ring Security**: your Ring doorbells and cameras, live view and recordings. A Pro feature, included in the 7-day trial.
+- **Pit Boss Grill**: watch and control a Pit Boss WiFi grill over your home network, no cloud account.
+- **TV Player**: one-click tiles for YouTube, Netflix, Hulu and other streaming sites, in a real browser window.
+- **Watch List**: a shelf of videos to watch later, shown on your TV.
+- **Recipes**: your recipes as you write them, with a big-text cook view.
+
+**Create**
+- **Video Studio** (with **Movie Maker**): text-to-video and whole movies from short shots.
+- **Comic Studio**: comic strips with characters, panels, balloons and print-ready books.
+- **Book Studio**: write and publish books, imported from Word or PDF, exported as screen and print PDFs.
+- **Storyboard**, **Stickers**, **Age Shift**, **Time Machine** and **Image Finish**: image tools for concept art, a sticker library, apparent-age changes, "old photograph" restorations of buildings, and simple local touch-ups.
+- **Print Studio**: 3D-printable models, exact or from a photo or description.
+
+**Research**
+- **AI Image Detector**: checks whether an image is AI-generated, and shows why.
+- **Historical Intelligence**: a research database and team for old buildings and their stories, with every claim tied to a quoted source.
+- **DeviceLab**: a workspace for reverse engineering hardware and software you own or may analyze.
+
+**Communication**
+- **iMessage Chat**: a full Messages client through your own Mac.
+- **Slack Desktop**: drive your own Slack app on a remote machine.
+- **iCloud Mail**: review and clean up spam, subscriptions and old mail, one batch at a time.
+
+**Infrastructure and browsing**
+- **Kubernetes**: create and manage disposable clusters on your machines.
+- **SubBrowser** and **HomeBrowser**: a real isolated browser streamed into JunctionBox, one through Tor and one persistent.
+
+More detail on each is in [`docs/PLUGINS.md`](docs/PLUGINS.md).
 
 ## Download and install
 
